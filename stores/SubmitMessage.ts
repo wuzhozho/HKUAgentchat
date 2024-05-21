@@ -51,7 +51,7 @@ export const submitMessage = async (message: Message) => {
             Authorization: 'Bearer ' + jwt,
           },
         }
-        const response = await axios.post('/api/openai_log', data , header);
+        const response = axios.post('/api/openai_log', data , header);
       }
     }catch (error) {
       console.log("==================question error",error)
@@ -166,7 +166,7 @@ export const submitMessage = async (message: Message) => {
               Authorization: 'Bearer ' + jwt,
             },
           }
-          const response = await axios.post('/api/openai_log', data , header);
+          const response = axios.post('/api/openai_log', data , header);
         }
       }catch (error) {
         console.log("==================answer error",error)
