@@ -257,6 +257,37 @@ export default function NewChatCarousel() {
   
   return (
     <Container py="xl">
+      <h2 style={{ textAlign: "center" }}> Choose a prompt...</h2>
+      <CardsCarousel>
+        {Object.keys(characters).map((key) => {
+          // @ts-ignore
+          const character = characters[key];
+          return (
+            <BGCard
+              key={key}
+              title={key}
+              image={character.avatar.src}
+              description={character.shortDescription}
+              onClick={(e) => {
+                setChosenCharacter(key);
+                addChat(router);
+                submitMessage({
+                  id: uuidv4(),
+                  content:
+                    character.prompt ||
+                    scriptBase({
+                      character: key,
+                      characterDescription:
+                        character.characterDescription || "",
+                    }),
+                  role: "system",
+                });
+              }}
+            />
+          );
+        })}
+      </CardsCarousel>
+
       <div
         style={{
           flex: 1,

@@ -219,9 +219,9 @@ export default function UIController() {
 
   return (
     <div className={classes.container}>
-      {/* <PlayerControls /> */}
+      <PlayerControls />
       <ChatInput />
-      {/* <RecorderControls /> */}
+      <RecorderControls />
     </div>
   );
 }
