@@ -370,7 +370,7 @@ export default function NavbarSimple() {
           <IconKey className={classes.linkIcon} stroke={1.5} />
           <span>API Keys</span>
         </a>
-   */}
+   
         <Modal
           opened={openedSettingsModal}
           onClose={closeSettingsModal}
@@ -393,6 +393,7 @@ export default function NavbarSimple() {
           <IconSettings className={classes.linkIcon} stroke={1.5} />
           <span>Settings</span>
         </a> 
+      */}
       </Navbar.Section>
       <Modal
         opened={openedTitleModal}
