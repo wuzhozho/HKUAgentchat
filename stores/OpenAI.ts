@@ -4,12 +4,10 @@ import https from "https";
 import { Message, truncateMessages, countTokens } from "./Message";
 import { getModelInfo } from "./Model";
 import axios from "axios";
-
 import { useChatStore } from "./ChatStore";
 
 // const baseUrl = process.env.NEXT_PUBLIC_OPENAI_BASE_URL || 'https://api.openai.com';
 // console.log(process.env);
-
 // console.log("=================NEXT_PUBLIC_OPENAI_BASE_URL,",baseUrl)
 
 function _baseUrl() {
@@ -40,7 +38,6 @@ async function fetchFromAPI(endpoint: string, key: string): Promise<any> {
   }
 }
 
-// 使用_baseUrl方法
 export async function testKey(key: string): Promise<boolean> {
   try {
     const res = await fetchFromAPI(`${_baseUrl()}/v1/models`, key);
@@ -165,7 +162,6 @@ export async function streamCompletion(
 
   const successCallback = (res: IncomingMessage) => {
     res.on("data", (chunk) => {
-      // console.log("-------------------chunk-",chunk.toString())
       if (abortController?.signal.aborted) {
         res.destroy();
         endCallback?.(0, 0);
@@ -174,11 +170,9 @@ export async function streamCompletion(
 
       // Split response into individual messages
       const allMessages = chunk.toString().split("\n\n");
-      // console.log("--------------------",allMessages)
       for (const message of allMessages) {
         // Remove first 5 characters ("data:") of response
         const cleaned = message.toString().trim().slice(5);
-        // console.log("-------cleaned,",cleaned);
 
         if (!cleaned || cleaned === " [DONE]") {
           return;
@@ -264,7 +258,7 @@ export async function genAudio({
     voice,
     response_format: 'mp3',
   });
-  const res = await fetch(`${_baseUrl}/v1/audio/speech`, {
+  const res = await fetch(`${_baseUrl()}/v1/audio/speech`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
