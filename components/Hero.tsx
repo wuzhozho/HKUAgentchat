@@ -91,7 +91,7 @@ export default function Hero() {
       autoSendStreamingSTT: true,
       // modelChoiceTTS: "azure",
       // modelChoiceSTT: "azure"
-      modelChoiceTTS: "whisper",
+      modelChoiceTTS: "openai",
       modelChoiceSTT: "whisper"
     });
   }
