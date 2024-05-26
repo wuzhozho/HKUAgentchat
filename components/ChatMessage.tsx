@@ -180,9 +180,8 @@ export default function ChatDisplay({ message }: { message: Message }) {
             <MediaQuery smallerThan="md" styles={{ display: "none" }}>
               <div className={classes.topOfMessage}>
                 <Avatar size="sm">
-                  {message.role === "system" ? (
-                    <IconSettings />
-                  ) : message.role === "assistant" ? (
+                  {/* 删除 message.role === "system" 的判断 2024.05.26 有删减 */}
+                  {message.role === "assistant" ? ( 
                     <AssistantIcon width={px("1.5rem")} height={px("1.5rem")} />
                   ) : (
                     <UserIcon width={px("1.5rem")} height={px("1.5rem")} />
