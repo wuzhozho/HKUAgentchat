@@ -153,6 +153,7 @@ export default function ChatDisplay({ message }: { message: Message }) {
     delMessage(message);
   };
 
+  if (message.role !== 'system') {
   return (
     <div
       key={message.id}
@@ -213,6 +214,10 @@ export default function ChatDisplay({ message }: { message: Message }) {
           </div>
         </div>
       </div>
-    </div>
+    </div>         
   );
+  }else{
+    // 如果 message.role 是 'system'，则不渲染任何内容
+    return null; 
+  }
 }
