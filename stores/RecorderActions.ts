@@ -86,7 +86,8 @@ export const startRecording = async (router: NextRouter) => {
       };
 
       // @ts-ignore
-      recorder = new window.OpusMediaRecorder(
+      // recorder = new window.OpusMediaRecorder(
+      recorder = new OpusMediaRecorder(
         stream,
         options,
         workerOptions
