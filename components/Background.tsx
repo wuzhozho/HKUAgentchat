@@ -5,7 +5,7 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     position: "fixed",
     // 使用 transform 实现视觉上的上下居中和左侧距离
     transform: 'translate(-50%, 10%) translateX(calc(40% + 20px))', 
-    width: "18%",
+    width: "15%",
     height: "80%",
     backgroundImage: 'url("/leftpic.png")',
     backgroundRepeat: 'no-repeat',
