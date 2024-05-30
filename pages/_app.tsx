@@ -1,6 +1,7 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import {
+  Aside,
   AppShell,
   ColorScheme,
   ColorSchemeProvider,
@@ -16,7 +17,6 @@ import { useEffect, useState } from "react";
 import UIController from "@/components/UIController";
 import { setColorScheme } from "@/stores/ChatActions";
 import AudioPlayer from "@/components/AudioPlayer";
-import Background from "@/components/Background";
 import '../i18n';
 
 export default function App(props: AppProps) {
@@ -109,11 +109,13 @@ export default function App(props: AppProps) {
               },
             })}
           >
-            <Background /> {/* 添加背景图组件 */}
-            <div style={{ position: "relative", height: "100%" }}>
-              <Component {...pageProps} />
-
-              {apiKey && <UIController />}
+            <div className="main-container" 
+              style={{ display: 'grid', gridTemplateColumns: '20% 80%', height: '100%' }}>
+              <div style={{backgroundImage: 'url("/leftpic.png")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+              <div> 
+                <Component {...pageProps} />
+                {apiKey && <UIController />}
+              </div>
             </div>
             {playerMode && <AudioPlayer />}
           </AppShell>
