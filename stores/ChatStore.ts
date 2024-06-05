@@ -93,6 +93,7 @@ export const defaultSettings = {
 export interface ChatState {
   jwt: string | undefined,
   lan: string | undefined,
+  prompt: string,
   user?: { // 可选的用户信息，初次加载时可能未登录，故此处为可选
     id: number;
     username: string;
@@ -147,6 +148,7 @@ export interface ChatState {
 export const initialState = {
   jwt: undefined,
   lan: 'en',
+  prompt:'',
   user: undefined,
   baseUrl: 'https://api.openai.com',
   apiState: "idle" as APIState,

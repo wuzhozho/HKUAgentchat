@@ -106,6 +106,7 @@ const fetchConfig = async (jwt:string) => {
         apiKey: config.attributes.OPENAI_KEY,
         colorScheme: config.attributes.theme,
         baseUrl: config.attributes.BASE_URL,
+        prompt: config.attributes.prompt,
         settingsForm: {
           ...config.attributes.settingsForm, // 拷贝之前的设置
           model: config.attributes.model // 设置新的模型值

@@ -50,7 +50,7 @@ Hello
 `;
 };
 
-const characters = {
+let characters = {
   "智能投资顾问": {
     shortDescription: "投资顾问@港大-商学院",
     avatar: expert,
@@ -229,6 +229,12 @@ function CardsCarousel({ children }: { children: React.ReactNode }) {
   const slides = React.Children.map(children, (theirChildren, index) => (
     <Carousel.Slide key={index}>{theirChildren}</Carousel.Slide>
   ));
+
+  // 从local里取prompt，有就替换掉,没用就用默认的prompt
+  const { prompt } = useChatStore();
+  if (prompt != '' || prompt != null || prompt != undefined ){
+    characters["智能投资顾问"].prompt = prompt;
+  }
 
   return (
     <Carousel
