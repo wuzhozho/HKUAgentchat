@@ -190,10 +190,10 @@ export const initialState = {
   autoSendStreamingSTT: true,
   modelChoicesChat: undefined,
   modelChoiceChat: undefined,
-  // modelChoiceTTS: "azure",
-  // modelChoiceSTT: "azure",
-  modelChoiceTTS: "whisper",
-  modelChoiceSTT: "whisper",
+  modelChoiceTTS: "azure",
+  modelChoiceSTT: "azure",
+  // modelChoiceTTS: "whisper",
+  // modelChoiceSTT: "whisper",
   textInputValue: "",
   
 };

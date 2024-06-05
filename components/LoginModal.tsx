@@ -64,7 +64,11 @@ const LoginPage: React.FC<Props> = ({ isOpen, onClose, onLogin }) => {
           // console.log("==============jwt,",jwt)
           // console.log("==============user,",user)
           // 存储到全局状态
-          useChatStore.setState({ jwt: jwt, user: user, });
+          useChatStore.setState({ jwt: jwt, user: user,
+            "apiKeyAzure": "f53343f59d4d4047a6799344f267f61a",
+            "apiKeyAzureRegion": "southeastasia",
+           });
+          
           showNotification({
             title: 'success',
             message: t('user-login-success'),
@@ -91,7 +95,8 @@ const LoginPage: React.FC<Props> = ({ isOpen, onClose, onLogin }) => {
   };
 
   // 定义获取配置信息的函数
-const fetchConfig = async (jwt:string) => {
+// 定义获取配置信息的函数
+const fetchConfig = async (jwt: string) => {
   try {
     const response = await axios.get('/api/config', {
       headers: {
@@ -99,8 +104,11 @@ const fetchConfig = async (jwt:string) => {
       },
     });
     if (response.status === 201) { 
-      const config = response.data.data
-      console.log("----------------config:", config)
+      const config = response.data.data;
+      console.log("----------------config:", config);
+
+      // 获取当前的 settingsForm
+      const currentSettingsForm = useChatStore.getState().settingsForm;
 
       update({
         apiKey: config.attributes.OPENAI_KEY,
@@ -108,8 +116,10 @@ const fetchConfig = async (jwt:string) => {
         baseUrl: config.attributes.BASE_URL,
         prompt: config.attributes.prompt,
         settingsForm: {
-          ...config.attributes.settingsForm, // 拷贝之前的设置
-          model: config.attributes.model // 设置新的模型值
+          ...currentSettingsForm, // 先保留现有的 settingsForm 值
+          // ...config.attributes.settingsForm, // 合并新的 settingsForm 值
+          model: config.attributes.model, // 设置新的模型值
+          auto_detect_language_azure: false
         }
       });
     }
