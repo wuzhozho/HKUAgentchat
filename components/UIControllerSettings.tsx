@@ -66,11 +66,11 @@ export default function UIController() {
     {
       label: "Speech to Text",
       items: [
-        // {
-        //   text: "Azure",
-        //   checked: modelChoiceSTT === "azure",
-        //   onClick: () => update({ modelChoiceSTT: "azure" }),
-        // },
+        {
+          text: "Azure",
+          checked: modelChoiceSTT === "azure",
+          onClick: () => update({ modelChoiceSTT: "azure" }),
+        },
         {
           text: "Whisper",
           checked: modelChoiceSTT === "whisper",
@@ -81,11 +81,11 @@ export default function UIController() {
     {
       label: "Text to Speech",
       items: [
-        // {
-        //   text: "Azure",
-        //   checked: modelChoiceTTS === "azure",
-        //   onClick: () => update({ modelChoiceTTS: "azure" }),
-        // },
+        {
+          text: "Azure",
+          checked: modelChoiceTTS === "azure",
+          onClick: () => update({ modelChoiceTTS: "azure" }),
+        },
         // {
         //   text: "ElevenLabs",
         //   checked: modelChoiceTTS === "11labs",

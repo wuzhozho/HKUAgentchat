@@ -5,10 +5,13 @@ import { useChatStore } from "./ChatStore";
 import { notifications } from "@mantine/notifications";
 import { genAudio as genAudioOpenAI } from "./OpenAI";
 
-const DEFAULT_AZURE_VOICE = "en-US-JaneNeural";
+// const DEFAULT_AZURE_VOICE = "en-US-JaneNeural";
+const DEFAULT_AZURE_VOICE = "zh-CN-XiaoxiaoNeural";
 const DEFAULT_11LABS_VOICE = "21m00Tcm4TlvDq8ikWAM";
 const DEFAULT_OPENAI_VOICE = "alloy";
 const DEFAULT_OPENAI_TTS_MODEL = "tts-1";
+
+
 
 const get = useChatStore.getState;
 const set = useChatStore.setState;
@@ -25,6 +28,8 @@ interface VarsShape {
   voiceId: string | undefined;
   voiceStyle?: string | undefined;
   model?: string | undefined;
+  rate?: string | undefined;
+  pitch?: string | undefined;  
   genAudio: typeof genAudioAzure | typeof genAudio11Labs | typeof genAudioOpenAI;
 }
 
@@ -38,6 +43,8 @@ const getVars = (): VarsShape => {
         apiKeyRegion: state.apiKeyAzureRegion,
         voiceId: state.settingsForm.voice_id_azure || DEFAULT_AZURE_VOICE,
         voiceStyle: state.settingsForm.spoken_language_style,
+        rate: "-25%", 
+        pitch: "-35%", 
         genAudio: genAudioAzure,
       };
     case '11labs':
@@ -173,7 +180,7 @@ export const playAudio = (idx: number) => {
 };
 
 const fetchAudio = async (idx: number) => {
-  const { apiKey, apiKeyRegion, voiceId, voiceStyle, genAudio, model } = getVars();
+  const { apiKey, apiKeyRegion, voiceId, voiceStyle, genAudio, model, rate, pitch  } = getVars();
   const { playerAudioQueue } = get();
 
   const chunk = playerAudioQueue[idx];
@@ -194,6 +201,8 @@ const fetchAudio = async (idx: number) => {
       region: apiKeyRegion,
       voice: voiceId,
       model,
+      rate: rate, 
+      pitch: pitch,
       style: voiceStyle,
     });
     if (audioURL) {

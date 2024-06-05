@@ -345,7 +345,8 @@ export default function SettingsModal({ close }: { close: () => void }) {
                   ([, v]) => v === value
                 );
                 if (key) {
-                  form.setFieldValue("spoken_language_code_azure", key[0]);
+                  // form.setFieldValue("spoken_language_code_azure", key[0]);
+                  form.setFieldValue("spoken_language_code_azure", "zh-CN");
                 }
 
                 form.setFieldValue("spoken_language_azure", value!);

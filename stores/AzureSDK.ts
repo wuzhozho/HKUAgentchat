@@ -46,24 +46,31 @@ export async function testKey(
 
 function createSSML(
   text: string,
-  voice: string = "en-US-JaneNeural",
-  style: string = "friendly"
+  // voice: string = "en-US-JaneNeural",
+  voice: string = "zh-CN-XiaoxiaoNeural",
+  style: string = "serious",
+  rate: string = "0%", // 添加 rate 参数，默认值为 "0%"
+  pitch: string = "0%" // 添加 pitch 参数，默认值为 "0%"
 ): string {
   let expressAs = "";
+  let prosodyOpenTag = `<prosody rate="${rate}" pitch="${pitch}">`; 
+  let prosodyCloseTag = `</prosody>`;
 
   text = removeEmoji(escapeChars(removeQuotes(text)));
 
   if (style) {
-    expressAs = `<mstts:express-as style="${style}">${text}</mstts:express-as>`;
+    // expressAs = `<mstts:express-as style="${style}">${text}</mstts:express-as>`;
+    expressAs = `<mstts:express-as style="${style}">${prosodyOpenTag}${text}${prosodyCloseTag}</mstts:express-as>`;
   } else {
-    expressAs = text;
+    // expressAs = text;
+    expressAs = `${prosodyOpenTag}${text}${prosodyCloseTag}`;
   }
 
   return `<speak xmlns="http://www.w3.org/2001/10/synthesis"
                 xmlns:mstts="http://www.w3.org/2001/mstts"
                 xmlns:emo="http://www.w3.org/2009/10/emotionml"
                 version="1.0"
-                xml:lang="en-US">
+                xml:lang="zh-CN">
                   <voice name="${voice}">
                     ${expressAs}
                   </voice>
@@ -76,12 +83,16 @@ export async function genAudio({
   region,
   voice,
   style,
+  rate,
+  pitch
 }: {
   text: string;
   key: string;
   region?: string;
   voice?: string;
   style?: string;
+  rate?: string;
+  pitch?: string;
 }): Promise<string | null> {
   var speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
     key,
@@ -93,7 +104,7 @@ export async function genAudio({
   // @ts-ignore - null is for audioConfig to prevent it from auto-speaking
   const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, null);
 
-  const ssmlText = createSSML(text, voice, style);
+  const ssmlText = createSSML(text, voice, style, rate, pitch);
 
   const resultPromise = new Promise<string | null>((resolve) => {
     synthesizer.speakSsmlAsync(
