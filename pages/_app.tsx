@@ -109,13 +109,18 @@ export default function App(props: AppProps) {
               },
             })}
           >
-            <div className="main-container" 
+            {/* <div className="main-container" 
               style={{ display: 'grid', gridTemplateColumns: '20% 80%', height: '100%' }}>
               <div style={{backgroundImage: 'url("/leftpic.png")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
               <div> 
                 <Component {...pageProps} />
                 {apiKey && <UIController />}
               </div>
+            </div> */}
+            <div style={{ position: "relative", height: "100%" }}>
+              <Component {...pageProps} />
+
+              {apiKey && <UIController />}
             </div>
             {playerMode && <AudioPlayer />}
           </AppShell>
