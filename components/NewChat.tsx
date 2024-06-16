@@ -1,7 +1,7 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useChatStore } from "@/stores/ChatStore";
-import { Container, rem, useMantineTheme } from "@mantine/core";
+import { Container, rem, useMantineTheme, Button } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { useMediaQuery } from "@mantine/hooks";
 import {
@@ -252,7 +252,7 @@ function CardsCarousel({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function NewChatCarousel() {
+export function NewChatCarousel1111() {
   const router = useRouter();
   const { t, i18n } = useTranslation();
   
@@ -290,6 +290,53 @@ export default function NewChatCarousel() {
         })}
       </CardsCarousel>
 
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+        }}
+      >
+        <h2> {t('plat')}</h2>
+        <IconArrowDown style={{ marginLeft: "0.5rem" }} />
+      </div>
+    </Container>
+  );
+}
+
+export default function NewChatCarousel() {
+  const router = useRouter();
+  const { t, i18n } = useTranslation();
+
+  // 获取第一个角色的 key 和数据
+  const firstCharacterKey = Object.keys(characters)[0];
+  const firstCharacter = characters['智能投资顾问']; // 获取第一个角色的数据
+
+  return (
+    <Container py="xl">
+      <h2 style={{ textAlign: "center" }}>Choose a prompt...</h2>
+
+      {/*  一个按钮，显示第一个角色信息 */}
+      <Button
+        fullWidth // 让按钮充满容器宽度
+        variant="outline"
+        onClick={(e) => {
+          setChosenCharacter(firstCharacterKey);
+          addChat(router);
+          submitMessage({
+            id: uuidv4(),
+            content: firstCharacter.prompt, 
+            role: "system",
+          });
+        }}
+      >
+        {/* 可以在这里添加更详细的按钮内容，例如： */}
+        {firstCharacterKey} - {firstCharacter.shortDescription} 
+      </Button>
+
+      {/* 下面内容保持不变 */}
       <div
         style={{
           flex: 1,
