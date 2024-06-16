@@ -1,7 +1,7 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useChatStore } from "@/stores/ChatStore";
-import { Container, rem, useMantineTheme, Button } from "@mantine/core";
+import { Container, rem, useMantineTheme, Button, Title, Group } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { useMediaQuery } from "@mantine/hooks";
 import {
@@ -316,38 +316,33 @@ export default function NewChatCarousel() {
 
   return (
     <Container py="xl">
-      <h2 style={{ textAlign: "center" }}>Choose a prompt...</h2>
-
-      {/*  一个按钮，显示第一个角色信息 */}
-      <Button
-        fullWidth // 让按钮充满容器宽度
-        variant="outline"
-        onClick={(e) => {
-          setChosenCharacter(firstCharacterKey);
-          addChat(router);
-          submitMessage({
-            id: uuidv4(),
-            content: firstCharacter.prompt, 
-            role: "system",
-          });
-        }}
-      >
-        {/* 可以在这里添加更详细的按钮内容，例如： */}
-        {firstCharacterKey} - {firstCharacter.shortDescription} 
-      </Button>
+      {/* 使用 Group 组件实现水平布局 */}
+      <Group position="center" mb="md"> 
+        <Title order={2}>Choose a prompt...</Title>
+        
+        {/*  一个按钮，显示第一个角色信息 */}
+        <Button
+          variant="outline"
+          onClick={(e) => {
+            setChosenCharacter(firstCharacterKey);
+            addChat(router);
+            submitMessage({
+              id: uuidv4(),
+              content: firstCharacter.prompt,
+              role: "system",
+            });
+          }}
+        >
+          {firstCharacterKey}
+        </Button>
+      </Group>
 
       {/* 下面内容保持不变 */}
       <div
-        style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}
+       // ...
       >
         <h2> {t('plat')}</h2>
-        <IconArrowDown style={{ marginLeft: "0.5rem" }} />
+        {/* ... */} 
       </div>
     </Container>
   );
