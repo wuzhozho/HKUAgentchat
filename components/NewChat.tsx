@@ -310,9 +310,17 @@ export default function NewChatCarousel() {
   const router = useRouter();
   const { t, i18n } = useTranslation();
 
+  // 从local里取prompt，有就替换掉,没用就用默认的prompt
+  const { prompt } = useChatStore();
+  if (prompt != '' || prompt != null || prompt != undefined ){
+    characters["智能投资顾问"].prompt = prompt;
+  }
+
   // 获取第一个角色的 key 和数据
   const firstCharacterKey = Object.keys(characters)[0];
   const firstCharacter = characters['智能投资顾问']; // 获取第一个角色的数据
+
+
 
   return (
     <Container py="xl">
