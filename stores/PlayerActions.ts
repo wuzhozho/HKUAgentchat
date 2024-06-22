@@ -43,8 +43,8 @@ const getVars = (): VarsShape => {
         apiKeyRegion: state.apiKeyAzureRegion,
         voiceId: state.settingsForm.voice_id_azure || DEFAULT_AZURE_VOICE,
         voiceStyle: state.settingsForm.spoken_language_style,
-        rate: "-25%", 
-        pitch: "-35%", 
+        rate: state.azureRate, 
+        pitch: state.azurePitch, 
         genAudio: genAudioAzure,
       };
     case '11labs':

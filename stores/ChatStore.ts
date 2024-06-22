@@ -147,6 +147,8 @@ export interface ChatState {
   modelChoiceTTS: string | undefined;
   modelChoiceSTT: string | undefined;
   textInputValue: string;
+  azureRate: string;
+  azurePitch: string;
 }
 export const initialState = {
   jwt: undefined,
@@ -196,6 +198,8 @@ export const initialState = {
   // modelChoiceSTT: "whisper",
   textInputValue: "",
   
+  azureRate: "0%",
+  azurePitch: "0%",
 };
 
 const store = () => ({ ...initialState } as ChatState);

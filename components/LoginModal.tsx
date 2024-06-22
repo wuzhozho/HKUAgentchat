@@ -115,6 +115,8 @@ const fetchConfig = async (jwt: string) => {
         colorScheme: config.attributes.theme,
         baseUrl: config.attributes.BASE_URL,
         prompt: config.attributes.prompt,
+        azureRate: config.attributes.azure_rate,
+        azurePitch: config.attributes.azure_pitch,
         settingsForm: {
           ...currentSettingsForm, // 先保留现有的 settingsForm 值
           // ...config.attributes.settingsForm, // 合并新的 settingsForm 值
