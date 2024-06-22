@@ -110,14 +110,24 @@ const fetchConfig = async (jwt: string) => {
       // 获取当前的 settingsForm
       const currentSettingsForm = useChatStore.getState().settingsForm;
       const azure_role_id = config.attributes.azure_role.split("--")[0]
+      let rate = config.attributes.azure_rate
+      if (rate == undefined || rate == "")
+        rate = "0";
+      if (!rate.includes('%'))
+        rate = rate + "%";
+      let pitch = config.attributes.azure_pitch
+      if (pitch == undefined || pitch == "")
+        pitch = "0";
+      if (!pitch.includes('%'))
+        pitch = pitch + "%";
 
       update({
         apiKey: config.attributes.OPENAI_KEY,
         colorScheme: config.attributes.theme,
         baseUrl: config.attributes.BASE_URL,
         prompt: config.attributes.prompt,
-        azureRate: config.attributes.azure_rate,
-        azurePitch: config.attributes.azure_pitch,
+        azureRate: rate,
+        azurePitch: pitch,
         settingsForm: {
           ...currentSettingsForm, // 先保留现有的 settingsForm 值
           // ...config.attributes.settingsForm, // 合并新的 settingsForm 值
