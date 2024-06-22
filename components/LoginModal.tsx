@@ -109,6 +109,7 @@ const fetchConfig = async (jwt: string) => {
 
       // 获取当前的 settingsForm
       const currentSettingsForm = useChatStore.getState().settingsForm;
+      const azure_role_id = config.attributes.azure_role.split("--")[0]
 
       update({
         apiKey: config.attributes.OPENAI_KEY,
@@ -121,6 +122,7 @@ const fetchConfig = async (jwt: string) => {
           ...currentSettingsForm, // 先保留现有的 settingsForm 值
           // ...config.attributes.settingsForm, // 合并新的 settingsForm 值
           model: config.attributes.model, // 设置新的模型值
+          voice_id_azure: azure_role_id,
           auto_detect_language_azure: false
         }
       });
