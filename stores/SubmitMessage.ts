@@ -52,10 +52,13 @@ export const submitMessage = async (message: Message) => {
           },
         }
         const response = axios.post('/api/openai_log', data , header);
+        if (message.role == 'user')
+          message.content = message.content + " 请简短回答"
       }
     }catch (error) {
       console.log("==================question error",error)
     }
+
   // If this is an existing message, remove all the messages after it
   const index = chat.messages.findIndex((m) => m.id === message.id);
   if (index !== -1) {
