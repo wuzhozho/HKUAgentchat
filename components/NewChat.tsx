@@ -317,7 +317,8 @@ export default function NewChatCarousel() {
   }
 
   // 获取第一个角色的 key 和数据
-  const firstCharacterKey = Object.keys(characters)[0];
+  // const firstCharacterKey = Object.keys(characters)[0];
+  const firstCharacterKey = "智能保险代理人";
   const firstCharacter = characters['智能投资顾问']; // 获取第一个角色的数据
 
 
