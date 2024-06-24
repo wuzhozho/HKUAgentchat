@@ -200,7 +200,7 @@ export default function MuHeader({ children }: any) {
               </>
             ) : null}
             {t('plat')}
-            <Text size="sm">{modelInfo.displayName}</Text>
+            {/* <Text size="sm">{modelInfo.displayName}</Text> */}
             {/* {isKnownModel && (
               <> 
                 <Divider size="xs" orientation="vertical" />
