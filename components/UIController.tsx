@@ -1,5 +1,6 @@
-import { useChatStore } from "@/stores/ChatStore";
+import { useChatStore, toggleAutoSendStreamingSTT } from "@/stores/ChatStore";
 import { Button, Loader, px, createStyles, MantineTheme } from "@mantine/core";
+import { useRef } from 'react';
 import {
   IconMicrophone,
   IconMicrophoneOff,
@@ -20,6 +21,8 @@ import {
   setPushToTalkMode,
 } from "@/stores/ChatActions";
 import { toggleAudio } from "@/stores/PlayerActions";
+
+let originAutoSendFlg = 0; 
 
 const styles = createStyles((theme: MantineTheme) => ({
   container: {
@@ -104,13 +107,16 @@ const PlayerControls = () => {
 const ChatInput = () => {
   const { classes } = styles();
 
+  const chatInputRef = useRef<{ doSubmit: () => void } | null>(null);
+
   const router = useRouter();
 
   const editingMessage = useChatStore((state) => state.editingMessage);
 
   const pushToTalkMode = useChatStore((state) => state.pushToTalkMode);
   const audioState = useChatStore((state) => state.audioState);
-
+  const autoSendStreamingSTT = useChatStore((state) => state.autoSendStreamingSTT);
+ 
   const activeChatId = useChatStore((state) => state.activeChatId);
   const showTextDuringPTT = useChatStore((state) => state.showTextDuringPTT);
   const showTextInput = !pushToTalkMode || showTextDuringPTT || editingMessage;
@@ -119,9 +125,11 @@ const ChatInput = () => {
   const Recorder = modelChoiceSTT === "azure" ? AzureRecorder : OpusRecorder;
 
   console.log("rendered with audioState", audioState);
+
   return (
     <div className={classes.textAreaContainer}>
-      {showTextInput && <ChatTextInput className={classes.textArea} />}
+      {/* {showTextInput && <ChatTextInput className={classes.textArea} />} */}
+      {showTextInput && <ChatTextInput ref={chatInputRef} className={classes.textArea} />}
       {pushToTalkMode && (
         <Button
           sx={{
@@ -133,6 +141,11 @@ const ChatInput = () => {
           className={classes.recorderButton}
           onClick={() => {
             if (audioState === "idle") {
+              // 开始的时候自动切换到不自动发送配置,如果是自动，先取消
+              if(autoSendStreamingSTT){
+                toggleAutoSendStreamingSTT();
+                originAutoSendFlg = 1;
+              }
               Recorder.startRecording(router);
             } else if (audioState === "transcribing") {
               return;
@@ -140,7 +153,13 @@ const ChatInput = () => {
               if (!activeChatId) {
                 addChat(router);
               }
+              if(originAutoSendFlg == 1){
+                toggleAutoSendStreamingSTT();
+                originAutoSendFlg = 0;
+              }
+              // 结束的时候自动切换到自动发送配置
               Recorder.stopRecording(true);
+              chatInputRef.current && chatInputRef.current.doSubmit && chatInputRef.current.doSubmit();
             }
           }}
         >

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { forwardRef, useImperativeHandle } from 'react';
 import { v4 as uuidv4 } from "uuid";
 import { useChatStore } from "@/stores/ChatStore";
 import {
@@ -13,7 +14,8 @@ import { useRouter } from "next/router";
 import { abortCurrentRequest, submitMessage } from "@/stores/SubmitMessage";
 import { addChat, setEditingMessage, update } from "@/stores/ChatActions";
 
-export default function ChatInput({ className }: { className?: string }) {
+const ChatInput = forwardRef(({ className }: { className?: string }, ref) => { 
+// export default function ChatInput({ className }: { className?: string }) {
   const theme = useMantineTheme();
   const router = useRouter();
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -50,6 +52,11 @@ export default function ChatInput({ className }: { className?: string }) {
     });
     setValue("");
   };
+
+  // 使用 `useImperativeHandle` 暴露 `doSubmit` 函数
+  useImperativeHandle(ref, () => ({
+    doSubmit,
+  }));
 
   const cancelEdit = () => {
     setEditingMessage(undefined);
@@ -135,4 +142,8 @@ export default function ChatInput({ className }: { className?: string }) {
       rightSectionWidth={42}
     />
   );
-}
+});
+
+ChatInput.displayName = 'ChatInput';
+
+export default ChatInput;

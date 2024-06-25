@@ -204,13 +204,13 @@ export const initialState = {
 
 const store = () => ({ ...initialState } as ChatState);
 
-export const useChatStore = create<ChatState>()(
-  persist(store, {
+export const useChatStore = create<ChatState>()( 
+  persist(store, { 
     name: "chat-store-v23",
     partialize: (state) =>
       Object.fromEntries(
         Object.entries(state).filter(([key]) => !excludeFromState.includes(key))
-      ),
+      )
   })
 );
 
@@ -223,3 +223,8 @@ export const getBaseUrl = () => {
   const state = useChatStore.getState(); 
   return { baseUrl: state.baseUrl}; 
 };
+
+export const toggleAutoSendStreamingSTT = () => 
+  useChatStore.setState((state) => ({  
+    autoSendStreamingSTT: !state.autoSendStreamingSTT,
+  }));
