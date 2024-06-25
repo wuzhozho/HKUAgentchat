@@ -106,12 +106,12 @@ export default function UIController() {
           checked: showTextDuringPTT,
           onClick: () => update({ showTextDuringPTT: !showTextDuringPTT }),
         },
-        {
-          text: "Auto send text",
-          checked: autoSendStreamingSTT,
-          onClick: () =>
-            update({ autoSendStreamingSTT: !autoSendStreamingSTT }),
-        },
+        // {
+        //   text: "Auto send text",
+        //   checked: autoSendStreamingSTT,
+        //   onClick: () =>
+        //     update({ autoSendStreamingSTT: !autoSendStreamingSTT }),
+        // },
       ],
     },
   ];

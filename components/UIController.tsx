@@ -142,10 +142,10 @@ const ChatInput = () => {
           onClick={() => {
             if (audioState === "idle") {
               // 开始的时候自动切换到不自动发送配置,如果是自动，先取消
-              if(autoSendStreamingSTT){
-                toggleAutoSendStreamingSTT();
-                originAutoSendFlg = 1;
-              }
+              // if(autoSendStreamingSTT){
+              //   toggleAutoSendStreamingSTT();
+              //   originAutoSendFlg = 1;
+              // }
               Recorder.startRecording(router);
             } else if (audioState === "transcribing") {
               return;
@@ -153,13 +153,13 @@ const ChatInput = () => {
               if (!activeChatId) {
                 addChat(router);
               }
-              if(originAutoSendFlg == 1){
-                toggleAutoSendStreamingSTT();
-                originAutoSendFlg = 0;
-              }
               // 结束的时候自动切换到自动发送配置
               Recorder.stopRecording(true);
               chatInputRef.current && chatInputRef.current.doSubmit && chatInputRef.current.doSubmit();
+              // if(originAutoSendFlg == 1){
+              //   toggleAutoSendStreamingSTT();
+              //   originAutoSendFlg = 0;
+              // }
             }
           }}
         >

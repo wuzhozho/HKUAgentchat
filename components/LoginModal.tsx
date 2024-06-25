@@ -67,6 +67,7 @@ const LoginPage: React.FC<Props> = ({ isOpen, onClose, onLogin }) => {
           useChatStore.setState({ jwt: jwt, user: user,
             "apiKeyAzure": "f53343f59d4d4047a6799344f267f61a",
             "apiKeyAzureRegion": "southeastasia",
+            "autoSendStreamingSTT": false,
            });
           
           showNotification({
