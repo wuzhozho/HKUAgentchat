@@ -21,6 +21,9 @@ import {
   setPushToTalkMode,
 } from "@/stores/ChatActions";
 import { toggleAudio } from "@/stores/PlayerActions";
+import React, { useState } from 'react';
+import ImmersiveVoiceUI from '../components/ImmersiveVoiceUI';
+import ImmersiveButton from '../components/ImmersiveButton';
 
 let originAutoSendFlg = 0; 
 
@@ -44,12 +47,13 @@ const styles = createStyles((theme: MantineTheme) => ({
     paddingBottom: 16,
     paddingLeft: 8,
     paddingRight: 8,
+    height:'95vh'
   },
   playerControls: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
-    minHeight: "72px",
+    minHeight: "72px"
   },
   textAreaContainer: {
     display: "flex",
@@ -68,7 +72,49 @@ const styles = createStyles((theme: MantineTheme) => ({
     justifyContent: "flex-end",
     minHeight: "72px",
   },
+  immersiveButtonContainer: { // 添加新的样式
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    zIndex: 100, // 设置较高的 z-index
+  },
 }));
+
+const ImmersiveControls = () => {
+  const { classes } = styles();
+
+  const [isRecording, setIsRecording] = useState(false);
+  const [isImmersive, setIsImmersive] = useState(false);
+
+  const handleStartRecording = () => {
+    setIsRecording(true);
+  };
+
+  const handleGoBack = () => {
+    setIsImmersive(false);
+    setIsRecording(false);
+  };
+
+  return (
+    <div className={classes.playerControls}>
+      <Button onClick={() => setIsImmersive(true)}>进入沉浸
+      </Button>
+      {isImmersive && (
+        <>
+          <ImmersiveVoiceUI isRecording={isRecording} onStartRecording={handleStartRecording} /> 
+          <div style={{ display: 'flex', justifyContent: 'center' }}> {/* 添加新的 div 容器 */}
+            <ImmersiveButton
+              isRecording={isRecording}
+              onStartRecording={handleStartRecording}
+              onGoBack={handleGoBack}
+            />
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 
 const PlayerControls = () => {
   const { classes } = styles();
@@ -78,6 +124,7 @@ const PlayerControls = () => {
 
   const isPlaying = useChatStore((state) => state.playerState === "playing");
   const PlayPauseIcon = isPlaying ? IconPlayerPause : IconPlayerPlay;
+
 
   return (
     <div className={classes.playerControls}>
@@ -100,6 +147,7 @@ const PlayerControls = () => {
       >
         <PlayerToggleIcon size={px("1.1rem")} stroke={1.5} />
       </Button>
+      
     </div>
   );
 };
@@ -235,9 +283,10 @@ const RecorderControls = () => {
 
 export default function UIController() {
   const { classes } = styles();
-
+ 
   return (
     <div className={classes.container}>
+      <ImmersiveControls />
       <PlayerControls />
       <ChatInput />
       <RecorderControls />
