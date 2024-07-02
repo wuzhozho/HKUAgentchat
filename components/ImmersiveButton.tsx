@@ -1,7 +1,6 @@
-// components\ImmersiveButton.tsx
-
 import React from "react";
-import { Mic as MicIcon, MicOff as MicOffIcon, MessageCircle as MessageCircleIcon } from "lucide-react"; // 导入 MicOff 图标
+import styled from 'styled-components';
+import { Mic as MicIcon, MicOff as MicOffIcon, MessageCircle as MessageCircleIcon } from "lucide-react"; 
 
 interface ActionButtonsProps {
     isRecording: boolean;
@@ -9,6 +8,21 @@ interface ActionButtonsProps {
     onGoBack: () => void;
     onMicrophoneClick: () => void;
 }
+
+interface AnimatedMicOffProps extends React.SVGProps<SVGSVGElement> {
+    isRecording: boolean;
+  }
+
+const AnimatedMicOff = styled(MicOffIcon).attrs<AnimatedMicOffProps>(props => ({
+  ...props, // 将所有属性传递给 MicOffIcon
+}))<AnimatedMicOffProps>`
+  animation: ${props => props.isRecording ? 'bounce 0.5s infinite alternate' : 'none'};
+
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+  }
+`;
 
 const ImmersiveButton: React.FC<ActionButtonsProps> = ({
     isRecording,
@@ -22,7 +36,7 @@ const ImmersiveButton: React.FC<ActionButtonsProps> = ({
                     <MessageCircleIcon />
                 </button>
                 <button style={{ height: '50px', width: '50px', borderRadius: '9999px', backgroundColor: '#ef4444', color: 'white', fontFamily: 'monospace' }} onClick={onMicrophoneClick}>
-                    {isRecording ? <MicOffIcon style={{ backgroundColor: 'transparent' }} /> : <MicIcon style={{ backgroundColor: 'transparent' }} />}
+                <AnimatedMicOff isRecording={isRecording} style={{ backgroundColor: 'transparent' }} /> 
                 </button>
             </div>
         </div>
