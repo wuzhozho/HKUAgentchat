@@ -102,7 +102,8 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({ onMicrophoneClick
 
   return (
     <div className={classes.playerControls}>
-      <Button onClick={() => setIsImmersive(true)}>进入沉浸</Button>
+      <Button sx={{ height: 72, borderRadius: "8px 8px 8px 8px" }}
+              onClick={() => setIsImmersive(true)}>沉浸</Button>
       {isImmersive && (
         <>
           <ImmersiveVoiceUI isRecording={isRecording} onStartRecording={handleStartRecording} />
