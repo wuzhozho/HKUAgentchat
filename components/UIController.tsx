@@ -281,11 +281,35 @@ const RecorderControls = () => {
 const UIController: React.FC = () => {
   const { classes } = styles();
   const chatInputRef = useRef<{ doSubmit: () => void } | null>(null);
+  const router = useRouter();
 
+  const editingMessage = useChatStore((state) => state.editingMessage);
+
+  const pushToTalkMode = useChatStore((state) => state.pushToTalkMode);
+  const audioState = useChatStore((state) => state.audioState);
+  const autoSendStreamingSTT = useChatStore((state) => state.autoSendStreamingSTT);
+
+  const activeChatId = useChatStore((state) => state.activeChatId);
+  const showTextDuringPTT = useChatStore((state) => state.showTextDuringPTT);
+  const showTextInput = !pushToTalkMode || showTextDuringPTT || editingMessage;
+
+  const modelChoiceSTT = useChatStore((state) => state.modelChoiceSTT);
+  const Recorder = modelChoiceSTT === "azure" ? AzureRecorder : OpusRecorder;
   const handleMicrophoneClick = () => {
     // 触发 ChatInput 组件中的麦克风按钮点击事件
-    if (chatInputRef.current) {
-      chatInputRef.current.doSubmit();
+    // if (chatInputRef.current) {
+    //   chatInputRef.current.doSubmit();
+    // }
+    if (audioState === "idle") {
+      Recorder.startRecording(router);
+    } else if (audioState === "transcribing") {
+      return;
+    } else {
+      if (!activeChatId) {
+        addChat(router);
+      }
+      Recorder.stopRecording(true);
+      chatInputRef.current && chatInputRef.current.doSubmit && chatInputRef.current.doSubmit();
     }
   };
 
