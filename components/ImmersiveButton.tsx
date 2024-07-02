@@ -4,16 +4,18 @@ import React from "react";
 import { Mic as MicIcon, MessageCircle as MessageCircleIcon } from "lucide-react";
 
 interface ActionButtonsProps {
-  isRecording: boolean;
-  onStartRecording: () => void;
-  onGoBack: () => void;
-}
+    isRecording: boolean;
+    onStartRecording: () => void;
+    onGoBack: () => void;
+    // onMicrophoneClick: () => void; // 添加 onMicrophoneClick 函数类型参数
+  }
 
-const ImmersiveButton: React.FC<ActionButtonsProps> = ({
-  isRecording,
-  onStartRecording,
-  onGoBack,
-}) => {
+  const ImmersiveButton: React.FC<ActionButtonsProps> = ({
+    isRecording,
+    // onStartRecording, // 不再需要这个属性
+    onGoBack,
+    // onMicrophoneClick,
+  }) => {
   return (
     <div 
       style={{ 
@@ -57,7 +59,10 @@ const ImmersiveButton: React.FC<ActionButtonsProps> = ({
             color: 'white',
             fontFamily: 'monospace' 
           }}
-          onClick={onStartRecording}
+          onClick={() => {
+            // onStartRecording(); 
+            // onMicrophoneClick(); // 调用 onMicrophoneClick 函数
+          }}
         >
           <MicIcon style={{ backgroundColor: 'transparent' }} />
         </button>
