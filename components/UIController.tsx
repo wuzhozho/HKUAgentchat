@@ -81,7 +81,11 @@ const styles = createStyles((theme: MantineTheme) => ({
   },
 }));
 
-const ImmersiveControls = () => {
+interface ImmersiveControlsProps {
+  onMicrophoneClick: () => void;
+}
+
+const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({ onMicrophoneClick }) => {
   const { classes } = styles();
 
   const [isRecording, setIsRecording] = useState(false);
@@ -98,16 +102,16 @@ const ImmersiveControls = () => {
 
   return (
     <div className={classes.playerControls}>
-      <Button onClick={() => setIsImmersive(true)}>进入沉浸
-      </Button>
+      <Button onClick={() => setIsImmersive(true)}>进入沉浸</Button>
       {isImmersive && (
         <>
-          <ImmersiveVoiceUI isRecording={isRecording} onStartRecording={handleStartRecording} /> 
-          <div style={{ display: 'flex', justifyContent: 'center' }}> {/* 添加新的 div 容器 */}
+          <ImmersiveVoiceUI isRecording={isRecording} onStartRecording={handleStartRecording} />
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <ImmersiveButton
               isRecording={isRecording}
               onStartRecording={handleStartRecording}
               onGoBack={handleGoBack}
+              onMicrophoneClick={onMicrophoneClick} // 传递 onMicrophoneClick
             />
           </div>
         </>
@@ -152,10 +156,18 @@ const PlayerControls = () => {
   );
 };
 
-const ChatInput = () => {
+
+const ChatInput = React.forwardRef((props, ref) => {
   const { classes } = styles();
 
   const chatInputRef = useRef<{ doSubmit: () => void } | null>(null);
+  React.useImperativeHandle(ref, () => ({
+    doSubmit: () => {
+      if (chatInputRef.current) {
+        chatInputRef.current.doSubmit();
+      }
+    },
+  }));
 
   const router = useRouter();
 
@@ -164,7 +176,7 @@ const ChatInput = () => {
   const pushToTalkMode = useChatStore((state) => state.pushToTalkMode);
   const audioState = useChatStore((state) => state.audioState);
   const autoSendStreamingSTT = useChatStore((state) => state.autoSendStreamingSTT);
- 
+
   const activeChatId = useChatStore((state) => state.activeChatId);
   const showTextDuringPTT = useChatStore((state) => state.showTextDuringPTT);
   const showTextInput = !pushToTalkMode || showTextDuringPTT || editingMessage;
@@ -176,7 +188,6 @@ const ChatInput = () => {
 
   return (
     <div className={classes.textAreaContainer}>
-      {/* {showTextInput && <ChatTextInput className={classes.textArea} />} */}
       {showTextInput && <ChatTextInput ref={chatInputRef} className={classes.textArea} />}
       {pushToTalkMode && (
         <Button
@@ -189,11 +200,6 @@ const ChatInput = () => {
           className={classes.recorderButton}
           onClick={() => {
             if (audioState === "idle") {
-              // 开始的时候自动切换到不自动发送配置,如果是自动，先取消
-              // if(autoSendStreamingSTT){
-              //   toggleAutoSendStreamingSTT();
-              //   originAutoSendFlg = 1;
-              // }
               Recorder.startRecording(router);
             } else if (audioState === "transcribing") {
               return;
@@ -201,23 +207,13 @@ const ChatInput = () => {
               if (!activeChatId) {
                 addChat(router);
               }
-              // 结束的时候自动切换到自动发送配置
               Recorder.stopRecording(true);
               chatInputRef.current && chatInputRef.current.doSubmit && chatInputRef.current.doSubmit();
-              // if(originAutoSendFlg == 1){
-              //   toggleAutoSendStreamingSTT();
-              //   originAutoSendFlg = 0;
-              // }
             }
           }}
         >
           {audioState === "recording" ? (
-            <Loader
-              size="3em"
-              variant="bars"
-              color="white"
-              sx={{ opacity: 1 }}
-            />
+            <Loader size="3em" variant="bars" color="white" sx={{ opacity: 1 }} />
           ) : audioState === "transcribing" ? (
             <Loader size="2em" color="white" sx={{ opacity: 1 }} />
           ) : (
@@ -227,7 +223,8 @@ const ChatInput = () => {
       )}
     </div>
   );
-};
+});
+ChatInput.displayName = 'ChatInput'; // 这
 
 const RecorderControls = () => {
   const { classes } = styles();
@@ -281,15 +278,26 @@ const RecorderControls = () => {
   );
 };
 
-export default function UIController() {
+const UIController: React.FC = () => {
   const { classes } = styles();
- 
+  const chatInputRef = useRef<{ doSubmit: () => void } | null>(null);
+
+  const handleMicrophoneClick = () => {
+    // 触发 ChatInput 组件中的麦克风按钮点击事件
+    if (chatInputRef.current) {
+      chatInputRef.current.doSubmit();
+    }
+  };
+
   return (
     <div className={classes.container}>
-      <ImmersiveControls />
+      <ImmersiveControls onMicrophoneClick={handleMicrophoneClick} /> {/* 确保这里正确传递了 prop */}
       <PlayerControls />
-      <ChatInput />
+      <ChatInput ref={chatInputRef} /> {/* 确保这里传递了 ref */}
       <RecorderControls />
     </div>
   );
-}
+};
+
+
+export default UIController;
