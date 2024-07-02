@@ -281,8 +281,9 @@ const RecorderControls = () => {
 const UIController: React.FC = () => {
   const { classes } = styles();
   const chatInputRef = useRef<{ doSubmit: () => void } | null>(null);
-  const router = useRouter();
 
+  // 以下和chatinput里的按钮功能一致
+  const router = useRouter();
   const editingMessage = useChatStore((state) => state.editingMessage);
 
   const pushToTalkMode = useChatStore((state) => state.pushToTalkMode);
@@ -296,10 +297,6 @@ const UIController: React.FC = () => {
   const modelChoiceSTT = useChatStore((state) => state.modelChoiceSTT);
   const Recorder = modelChoiceSTT === "azure" ? AzureRecorder : OpusRecorder;
   const handleMicrophoneClick = () => {
-    // 触发 ChatInput 组件中的麦克风按钮点击事件
-    // if (chatInputRef.current) {
-    //   chatInputRef.current.doSubmit();
-    // }
     if (audioState === "idle") {
       Recorder.startRecording(router);
     } else if (audioState === "transcribing") {
@@ -312,7 +309,7 @@ const UIController: React.FC = () => {
       chatInputRef.current && chatInputRef.current.doSubmit && chatInputRef.current.doSubmit();
     }
   };
-
+////////////////////////////
   return (
     <div className={classes.container}>
       <ImmersiveControls onMicrophoneClick={handleMicrophoneClick} /> {/* 确保这里正确传递了 prop */}
