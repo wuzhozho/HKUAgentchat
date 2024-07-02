@@ -111,7 +111,10 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({ onMicrophoneClick
               isRecording={isRecording}
               onStartRecording={handleStartRecording}
               onGoBack={handleGoBack}
-              onMicrophoneClick={onMicrophoneClick} // 传递 onMicrophoneClick
+              onMicrophoneClick={() => {
+                setIsRecording(prev => !prev); 
+                onMicrophoneClick(); 
+              }} 
             />
           </div>
         </>

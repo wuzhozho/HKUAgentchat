@@ -1,20 +1,19 @@
-"use client";
+// components\ImmersiveButton.tsx
 
 import React from "react";
-import { Mic as MicIcon, MessageCircle as MessageCircleIcon } from "lucide-react";
+import { Mic as MicIcon, MicOff as MicOffIcon, MessageCircle as MessageCircleIcon } from "lucide-react"; // 导入 MicOff 图标
 
-// components/ImmersiveButton.tsx 的修改
 interface ActionButtonsProps {
     isRecording: boolean;
     onStartRecording: () => void;
     onGoBack: () => void;
-    onMicrophoneClick: () => void; // 添加 onMicrophoneClick 函数类型参数
+    onMicrophoneClick: () => void;
 }
 
 const ImmersiveButton: React.FC<ActionButtonsProps> = ({
     isRecording,
     onGoBack,
-    onMicrophoneClick, // 使用这个 prop
+    onMicrophoneClick,
 }) => {
     return (
         <div style={{ position: 'fixed', bottom: 20, left: 100, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 100 }}>
@@ -23,7 +22,7 @@ const ImmersiveButton: React.FC<ActionButtonsProps> = ({
                     <MessageCircleIcon />
                 </button>
                 <button style={{ height: '50px', width: '50px', borderRadius: '9999px', backgroundColor: '#ef4444', color: 'white', fontFamily: 'monospace' }} onClick={onMicrophoneClick}>
-                    <MicIcon style={{ backgroundColor: 'transparent' }} />
+                    {isRecording ? <MicOffIcon style={{ backgroundColor: 'transparent' }} /> : <MicIcon style={{ backgroundColor: 'transparent' }} />}
                 </button>
             </div>
         </div>
