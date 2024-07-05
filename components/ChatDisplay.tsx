@@ -111,6 +111,8 @@ const ChatDisplay = () => {
   const router = useRouter();
   const activeChatId = router.query.chatId as string | undefined;
 
+  const isImmersive = useChatStore((state) => state.isImmersive);
+
   useEffect(() => {
     setActiveChatId(activeChatId as string | undefined);
   }, [activeChatId]);
@@ -164,7 +166,7 @@ const ChatDisplay = () => {
       style={{ paddingBottom: pushToTalkMode ? "7em" : "5em" }}
     >
       <div className={classes.chatContainer}>
-        <MuHeader />
+        {!isImmersive && <MuHeader />}
 
         {!activeChatId && <NewChat />}
         {activeChat?.messages.map((message, idx) => (
