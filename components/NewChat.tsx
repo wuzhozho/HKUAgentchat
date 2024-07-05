@@ -332,6 +332,7 @@ export default function NewChatCarousel() {
         {/*  一个按钮，显示第一个角色信息 */}
         <Button
           variant="outline"
+          sx={{ zIndex: 100 }}
           onClick={(e) => {
             setChosenCharacter(firstCharacterKey);
             addChat(router);
