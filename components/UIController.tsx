@@ -24,6 +24,8 @@ import { toggleAudio } from "@/stores/PlayerActions";
 import React, { useState } from 'react';
 import ImmersiveVoiceUI from '../components/ImmersiveVoiceUI';
 import ImmersiveButton from '../components/ImmersiveButton';
+import { submitMessage } from "@/stores/SubmitMessage";
+import { v4 as uuidv4 } from "uuid";
 
 let originAutoSendFlg = 0; 
 
@@ -85,6 +87,60 @@ interface ImmersiveControlsProps {
   onMicrophoneClick: () => void;
 }
 
+const ImmersiveControls1: React.FC<ImmersiveControlsProps> = ({ onMicrophoneClick }) => {
+  const router = useRouter();
+  const { classes } = styles();
+
+  const [isRecording, setIsRecording] = useState(false);
+  const [isImmersive, setIsImmersive] = useState(false);
+
+  const handleStartRecording = () => {
+    setIsRecording(true);
+  };
+
+  const handleGoBack = () => {
+    setIsImmersive(false);
+    useChatStore.setState({ isImmersive: false});
+    setIsRecording(false);
+  };
+
+    // 从local里取prompt，有就替换掉,没用就用默认的prompt
+    const { prompt } = useChatStore();
+
+  return (
+    <div className={classes.playerControls}>
+      <Button sx={{ height: 72, borderRadius: "8px 8px 8px 8px" }}
+              onClick= {(e) => {
+                setIsImmersive(true)
+                useChatStore.setState({ isImmersive: true});
+                addChat(router);
+                submitMessage({
+                  id: uuidv4(),
+                  content: prompt,
+                  role: "system",
+                });
+              }}
+              >智能保险代理人</Button>
+      {isImmersive && (
+        <>
+          <ImmersiveVoiceUI isRecording={isRecording} onStartRecording={handleStartRecording} />
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <ImmersiveButton
+              isRecording={isRecording}
+              onStartRecording={handleStartRecording}
+              onGoBack={handleGoBack}
+              onMicrophoneClick={() => {
+                setIsRecording(prev => !prev); 
+                onMicrophoneClick(); 
+              }} 
+            />
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
 const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({ onMicrophoneClick }) => {
   const { classes } = styles();
 
@@ -97,13 +153,14 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({ onMicrophoneClick
 
   const handleGoBack = () => {
     setIsImmersive(false);
+    useChatStore.setState({ isImmersive: false});
     setIsRecording(false);
   };
 
   return (
     <div className={classes.playerControls}>
       <Button sx={{ height: 72, borderRadius: "8px 8px 8px 8px" }}
-              onClick={() => setIsImmersive(true)}>沉浸</Button>
+              onClick={() => {setIsImmersive(true);useChatStore.setState({ isImmersive: true});}}>沉浸</Button>
       {isImmersive && (
         <>
           <ImmersiveVoiceUI isRecording={isRecording} onStartRecording={handleStartRecording} />
@@ -316,7 +373,8 @@ const UIController: React.FC = () => {
 ////////////////////////////
   return (
     <div className={classes.container}>
-      <ImmersiveControls onMicrophoneClick={handleMicrophoneClick} /> {/* 确保这里正确传递了 prop */}
+      <ImmersiveControls1 onMicrophoneClick={handleMicrophoneClick} />
+      <ImmersiveControls onMicrophoneClick={handleMicrophoneClick} /> 
       <PlayerControls />
       <ChatInput ref={chatInputRef} /> {/* 确保这里传递了 ref */}
       <RecorderControls />

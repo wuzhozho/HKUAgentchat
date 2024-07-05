@@ -24,6 +24,9 @@ export default function App(props: AppProps) {
 
   const colorScheme = useChatStore((state) => state.colorScheme);
 
+  // 使用 useChatStore 获取 isImmersive 状态
+  const isImmersive = useChatStore((state) => state.isImmersive);
+  
   const toggleColorScheme = (value?: ColorScheme) => {
     const nextColorScheme =
       value || (colorScheme === "dark" ? "light" : "dark");
@@ -96,7 +99,7 @@ export default function App(props: AppProps) {
           <Notifications />
           <AppShell
             padding={0}
-            navbar={<Nav />}
+            navbar={isImmersive ?  <></> : <Nav />}
             layout="alt"
             navbarOffsetBreakpoint="sm"
             asideOffsetBreakpoint="sm"

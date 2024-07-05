@@ -121,7 +121,12 @@ const fetchConfig = async (jwt: string) => {
         pitch = "0";
       if (!pitch.includes('%'))
         pitch = pitch + "%";
-
+      // 沉浸式状态
+      let isImmersive = useChatStore.getState().isImmersive
+      if (isImmersive == undefined || isImmersive == null){
+        isImmersive = false;
+      }
+        
       update({
         apiKey: config.attributes.OPENAI_KEY,
         colorScheme: config.attributes.theme,
@@ -129,6 +134,7 @@ const fetchConfig = async (jwt: string) => {
         prompt: config.attributes.prompt,
         azureRate: rate,
         azurePitch: pitch,
+        isImmersive: isImmersive,
         settingsForm: {
           ...currentSettingsForm, // 先保留现有的 settingsForm 值
           // ...config.attributes.settingsForm, // 合并新的 settingsForm 值

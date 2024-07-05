@@ -91,6 +91,7 @@ export const defaultSettings = {
   spoken_language_code_azure: "zh-CN",
   spoken_language_style: "serious",
   submit_debounce_ms: 0,
+  isImmersive: false
 };
 
 export interface ChatState {
@@ -149,6 +150,7 @@ export interface ChatState {
   textInputValue: string;
   azureRate: string;
   azurePitch: string;
+  isImmersive: boolean;
 }
 export const initialState = {
   jwt: undefined,
@@ -200,6 +202,7 @@ export const initialState = {
   
   azureRate: "0%",
   azurePitch: "0%",
+  isImmersive: false,
 };
 
 const store = () => ({ ...initialState } as ChatState);
