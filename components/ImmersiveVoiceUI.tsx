@@ -30,7 +30,7 @@ const ImmersiveVoiceUI: React.FC<ImmersiveVoiceUIProps> = ({
         if (canvas) {
           canvas.style.position = "absolute";
           canvas.style.top = "0";
-          canvas.style.left = "-50%";
+          canvas.style.left = "-65%";
           canvas.style.width = "200%";
           canvas.style.height = "100%";
           canvas.style.background = "gray";
