@@ -120,7 +120,7 @@ const ImmersiveControls1: React.FC<ImmersiveControlsProps> = ({ onMicrophoneClic
                   role: "system",
                 });
               }}
-              >智能保险代理人</Button>
+              >保险代理人<br/>&nbsp;&nbsp;&nbsp;&nbsp;模式</Button>
       {isImmersive && (
         <>
           <ImmersiveVoiceUI isRecording={isRecording} onStartRecording={handleStartRecording} />
@@ -160,7 +160,8 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({ onMicrophoneClick
   return (
     <div className={classes.playerControls}>
       <Button sx={{ height: 72, borderRadius: "8px 8px 8px 8px" }}
-              onClick={() => {setIsImmersive(true);useChatStore.setState({ isImmersive: true});}}>沉浸</Button>
+              onClick={() => {setIsImmersive(true);useChatStore.setState({ isImmersive: true});}}>简单语音<br/>&nbsp;&nbsp;&nbsp;&nbsp;对话
+              </Button>
       {isImmersive && (
         <>
           <ImmersiveVoiceUI isRecording={isRecording} onStartRecording={handleStartRecording} />
