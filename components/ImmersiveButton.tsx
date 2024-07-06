@@ -13,6 +13,15 @@ interface AnimatedMicIconProps extends React.SVGProps<SVGSVGElement> {
     isRecording: boolean;
 }
 
+const AnimatedMic = styled(MicIcon)<AnimatedMicIconProps>`
+  animation: ${props => props.isRecording ? 'bounce 0.5s infinite alternate' : 'none'};
+
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+  }
+`;
+
 const AnimatedMicOff = styled(MicOffIcon)<AnimatedMicIconProps>`
   animation: ${props => props.isRecording ? 'bounce 0.5s infinite alternate' : 'none'};
 
@@ -42,10 +51,15 @@ const ImmersiveButton: React.FC<ActionButtonsProps> = ({
                 </button>
                 <button style={{ height: '50px', width: '50px', borderRadius: '9999px', backgroundColor: '#ef4444', color: 'white', fontFamily: 'monospace' }} onClick={handleMicrophoneClick}>
                     {/* 根据 isMicOn 状态渲染不同的图标 */}
-                    {isMicOn ? (
+                    {/* {isMicOn ? (
                         <MicIcon style={{ backgroundColor: 'transparent' }} />
                     ) : (
                         <AnimatedMicOff isRecording={isRecording} style={{ backgroundColor: 'transparent' }} />
+                    )} */}
+                    {isMicOn ? (
+                        <MicOffIcon style={{ backgroundColor: 'transparent' }} />
+                    ) : (
+                        <AnimatedMic isRecording={isRecording} style={{ backgroundColor: 'transparent' }} />
                     )}
                 </button>
             </div>
