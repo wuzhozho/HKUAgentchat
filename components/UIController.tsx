@@ -160,7 +160,7 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({ onMicrophoneClick
   return (
     <div className={classes.playerControls}>
       <Button sx={{ height: 72, borderRadius: "8px 8px 8px 8px" }}
-              onClick={() => {setIsImmersive(true);useChatStore.setState({ isImmersive: true});}}>简单语音<br/>&nbsp;&nbsp;&nbsp;&nbsp;对话
+              onClick={() => {setIsImmersive(true);useChatStore.setState({ isImmersive: true});}}>Immersive <br/> mode
               </Button>
       {isImmersive && (
         <>
@@ -374,10 +374,10 @@ const UIController: React.FC = () => {
 ////////////////////////////
   return (
     <div className={classes.container}>
-      <ImmersiveControls1 onMicrophoneClick={handleMicrophoneClick} />
+      {/* <ImmersiveControls1 onMicrophoneClick={handleMicrophoneClick} /> */}
       <ImmersiveControls onMicrophoneClick={handleMicrophoneClick} /> 
       <PlayerControls />
-      <ChatInput ref={chatInputRef} /> {/* 确保这里传递了 ref */}
+      <ChatInput ref={chatInputRef} /> 
       <RecorderControls />
     </div>
   );
