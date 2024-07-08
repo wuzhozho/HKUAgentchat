@@ -327,7 +327,7 @@ export default function NewChatCarousel() {
     <Container py="xl">
       {/* 使用 Group 组件实现水平布局 */}
       <Group position="center" mb="md"> 
-        <Title order={2}>Choose a prompt...</Title>
+        {/* <Title order={2}>Choose a prompt...</Title> */}
         
         <Button
           variant="outline"
