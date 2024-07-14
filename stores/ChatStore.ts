@@ -82,13 +82,13 @@ export const defaultSettings = {
   // ElevenLabs
   voice_id: "21m00Tcm4TlvDq8ikWAM",
   // Azure
-  voice_id_azure: "en-US-JaneNeural",
-  // voice_id_azure: "zh-CN-XiaoxiaoNeural",
+  // voice_id_azure: "en-US-JaneNeural",
+  voice_id_azure: "zh-CN-XiaoxiaoNeural",
   auto_detect_language_azure: true,
-  spoken_language_azure: "English (US)",
-  spoken_language_code_azure: "en-US",
-  // spoken_language_azure: "Chinese - CN",
-  // spoken_language_code_azure: "zh-CN",
+  // spoken_language_azure: "English (US)",
+  // spoken_language_code_azure: "en-US",
+  spoken_language_azure: "Chinese - CN",
+  spoken_language_code_azure: "zh-CN",
   spoken_language_style: "serious",
   submit_debounce_ms: 0,
   isImmersive: false

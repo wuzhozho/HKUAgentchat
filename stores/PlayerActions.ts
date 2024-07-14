@@ -5,8 +5,8 @@ import { useChatStore } from "./ChatStore";
 import { notifications } from "@mantine/notifications";
 import { genAudio as genAudioOpenAI } from "./OpenAI";
 
-const DEFAULT_AZURE_VOICE = "en-US-JaneNeural";
-// const DEFAULT_AZURE_VOICE = "zh-CN-XiaoxiaoNeural";
+// const DEFAULT_AZURE_VOICE = "en-US-JaneNeural";
+const DEFAULT_AZURE_VOICE = "zh-CN-XiaoxiaoNeural";
 const DEFAULT_11LABS_VOICE = "21m00Tcm4TlvDq8ikWAM";
 const DEFAULT_OPENAI_VOICE = "alloy";
 const DEFAULT_OPENAI_TTS_MODEL = "tts-1";
