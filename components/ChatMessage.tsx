@@ -153,6 +153,8 @@ export default function ChatDisplay({ message }: { message: Message }) {
     delMessage(message);
   };
 
+  return null; 
+  
   if (message.role !== 'system') {
   return (
     <div
