@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             console.log(apiUrl)
             console.log(req.body)
             const response = await axios.post(apiUrl, req.body);
-            console.log('Well done!');
+            console.log('Well done!',response);
             console.log('User profile', response.data.user);
             console.log('User token', response.data.jwt);
             return res.status(201).json(response.data);

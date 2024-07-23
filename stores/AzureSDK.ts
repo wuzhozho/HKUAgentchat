@@ -1,4 +1,5 @@
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
+import axios from "axios";
 
 export async function testKey(
   subscriptionKey: string,
@@ -44,19 +45,42 @@ export async function testKey(
   return resultPromise;
 }
 
-function createSSML(
+function isChinese(text: string): boolean {
+  return /[\u4e00-\u9fa5]/.test(text); 
+}
+
+async function createSSML(
   text: string,
   // voice: string = "en-US-JaneNeural",
   voice: string = "zh-CN-XiaoxiaoNeural",
   style: string = "serious",
   rate: string = "0%", // 添加 rate 参数，默认值为 "0%"
-  pitch: string = "0%" // 添加 pitch 参数，默认值为 "0%"
-): string {
+  pitch: string = "0%", // 添加 pitch 参数，默认值为 "0%"
+  breakTimeMs: string = '2'
+): Promise<string> {
   let expressAs = "";
   let prosodyOpenTag = `<prosody rate="${rate}" pitch="${pitch}">`; 
   let prosodyCloseTag = `</prosody>`;
+  const breakTag = `<break time="${breakTimeMs}ms"/>`;
 
   text = removeEmoji(escapeChars(removeQuotes(text)));
+  // text = nodejieba.cut(text).join(" ");
+  // console.log("--==-==--=-=-=-=-=-=",text)
+  try {
+    if (isChinese(text)) {
+      const response = await axios.post("/api/segment", { text: text });
+      const segments = response.data.segments; // 使用 segments 接收分词结果
+      text = segments.join(breakTag)
+      console.log("-=-=-=-=-=-=-=-=中文:", text); 
+    } else {
+      const words = text.split(' ');
+      text = words.join(` ${breakTag} `);
+      console.log("-=-=-=-=-=-=-=-=E words:", text); 
+    }
+    
+  } catch (error) {
+    console.error(error);
+  }
 
   if (style) {
     // expressAs = `<mstts:express-as style="${style}">${text}</mstts:express-as>`;
@@ -115,7 +139,7 @@ export async function genAudio({
   // @ts-ignore - null is for audioConfig to prevent it from auto-speaking
   const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, null);
 
-  const ssmlText = createSSML(text, voice, style, rate, pitch);
+  const ssmlText = await createSSML(text, voice, style, rate, pitch);
 
   const resultPromise = new Promise<string | null>((resolve) => {
     synthesizer.speakSsmlAsync(
