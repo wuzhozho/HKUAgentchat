@@ -150,6 +150,7 @@ export interface ChatState {
   textInputValue: string;
   azureRate: string;
   azurePitch: string;
+  azureBreakms: string;
   isImmersive: boolean;
 }
 export const initialState = {
@@ -202,6 +203,7 @@ export const initialState = {
   
   azureRate: "0%",
   azurePitch: "0%",
+  azureBreakms: "0",
   isImmersive: false,
 };
 

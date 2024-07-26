@@ -30,6 +30,7 @@ interface VarsShape {
   model?: string | undefined;
   rate?: string | undefined;
   pitch?: string | undefined;  
+  breakms?: string | undefined;  
   genAudio: typeof genAudioAzure | typeof genAudio11Labs | typeof genAudioOpenAI;
 }
 
@@ -45,6 +46,7 @@ const getVars = (): VarsShape => {
         voiceStyle: state.settingsForm.spoken_language_style,
         rate: state.azureRate, 
         pitch: state.azurePitch, 
+        breakms: state.azureBreakms,
         genAudio: genAudioAzure,
       };
     case '11labs':
@@ -180,7 +182,7 @@ export const playAudio = (idx: number) => {
 };
 
 const fetchAudio = async (idx: number) => {
-  const { apiKey, apiKeyRegion, voiceId, voiceStyle, genAudio, model, rate, pitch  } = getVars();
+  const { apiKey, apiKeyRegion, voiceId, voiceStyle, genAudio, model, rate, pitch, breakms } = getVars();
   const { playerAudioQueue } = get();
 
   const chunk = playerAudioQueue[idx];
@@ -203,6 +205,7 @@ const fetchAudio = async (idx: number) => {
       model,
       rate: rate, 
       pitch: pitch,
+      breakms: breakms,
       style: voiceStyle,
     });
     if (audioURL) {

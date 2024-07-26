@@ -61,27 +61,32 @@ async function createSSML(
   let expressAs = "";
   let prosodyOpenTag = `<prosody rate="${rate}" pitch="${pitch}">`; 
   let prosodyCloseTag = `</prosody>`;
-  const breakTag = `<break time="${breakTimeMs}ms"/>`;
+  let breakTag = `<break time="${breakTimeMs}ms"/>`;
+  if (breakTimeMs == "0" || breakTimeMs == "" ){
+    breakTag = ''
+  }
 
   text = removeEmoji(escapeChars(removeQuotes(text)));
   // text = nodejieba.cut(text).join(" ");
   // console.log("--==-==--=-=-=-=-=-=",text)
-  try {
-    if (isChinese(text)) {
-      const response = await axios.post("/api/segment", { text: text });
-      const segments = response.data.segments; // 使用 segments 接收分词结果
-      text = segments.join(breakTag)
-      console.log("-=-=-=-=-=-=-=-=中文:", text); 
-    } else {
-      const words = text.split(' ');
-      text = words.join(` ${breakTag} `);
-      console.log("-=-=-=-=-=-=-=-=E words:", text); 
+  if(breakTag!=''){
+    try {
+      if (isChinese(text)) {
+        const response = await axios.post("/api/segment", { text: text });
+        const segments = response.data.segments; // 使用 segments 接收分词结果
+        text = segments.join(breakTag)
+        console.log("-=-=-=-=-=-=-=-=中文:", text); 
+      } else {
+        const words = text.split(' ');
+        text = words.join(` ${breakTag} `);
+        console.log("-=-=-=-=-=-=-=-=E words:", text); 
+      }
+      
+    } catch (error) {
+      console.error(error);
     }
-    
-  } catch (error) {
-    console.error(error);
   }
-
+  
   if (style) {
     // expressAs = `<mstts:express-as style="${style}">${text}</mstts:express-as>`;
     expressAs = `<mstts:express-as style="${style}">${prosodyOpenTag}${text}${prosodyCloseTag}</mstts:express-as>`;
@@ -119,7 +124,8 @@ export async function genAudio({
   voice,
   style,
   rate,
-  pitch
+  pitch,
+  breakms,
 }: {
   text: string;
   key: string;
@@ -128,6 +134,7 @@ export async function genAudio({
   style?: string;
   rate?: string;
   pitch?: string;
+  breakms?: string;
 }): Promise<string | null> {
   var speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
     key,
@@ -139,7 +146,7 @@ export async function genAudio({
   // @ts-ignore - null is for audioConfig to prevent it from auto-speaking
   const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, null);
 
-  const ssmlText = await createSSML(text, voice, style, rate, pitch);
+  const ssmlText = await createSSML(text, voice, style, rate, pitch, breakms);
 
   const resultPromise = new Promise<string | null>((resolve) => {
     synthesizer.speakSsmlAsync(
