@@ -372,13 +372,25 @@ const UIController: React.FC = () => {
     }
   };
 ////////////////////////////
+  // return (
+  //   // <div className={classes.container}>
+  //   //   {/* <ImmersiveControls1 onMicrophoneClick={handleMicrophoneClick} /> */}
+  //   //   {/* <ImmersiveControls onMicrophoneClick={handleMicrophoneClick} />  */}
+  //   //   {/* <PlayerControls /> */}
+  //   //   <ChatInput ref={chatInputRef} /> 
+  //   //   {/* <RecorderControls /> */}
+  //   // </div>
+  //   <div className={classes.container} style={{ display: 'grid', gridTemplateColumns: '30% 70%', height: '100%' }}>
+  //                 <div></div>
+  //                 <div><ChatInput ref={chatInputRef} /> </div>
+  //   </div>
+  // );
   return (
-    <div className={classes.container}>
-      {/* <ImmersiveControls1 onMicrophoneClick={handleMicrophoneClick} /> */}
-      {/* <ImmersiveControls onMicrophoneClick={handleMicrophoneClick} />  */}
-      {/* <PlayerControls /> */}
-      <ChatInput ref={chatInputRef} /> 
-      {/* <RecorderControls /> */}
+    <div className={classes.container} style={{ display: 'flex', height: '100%' }}>
+      <div style={{ width: '30%' }}></div>
+      <div style={{ width: '70%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+        <ChatInput ref={chatInputRef} />
+      </div>
     </div>
   );
 };
