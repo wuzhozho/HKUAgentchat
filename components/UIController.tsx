@@ -375,10 +375,10 @@ const UIController: React.FC = () => {
   return (
     <div className={classes.container}>
       {/* <ImmersiveControls1 onMicrophoneClick={handleMicrophoneClick} /> */}
-      <ImmersiveControls onMicrophoneClick={handleMicrophoneClick} /> 
-      <PlayerControls />
+      {/* <ImmersiveControls onMicrophoneClick={handleMicrophoneClick} />  */}
+      {/* <PlayerControls /> */}
       <ChatInput ref={chatInputRef} /> 
-      <RecorderControls />
+      {/* <RecorderControls /> */}
     </div>
   );
 };
