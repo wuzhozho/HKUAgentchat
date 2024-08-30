@@ -112,15 +112,34 @@ export default function App(props: AppProps) {
               },
             })}
           >
-            { <div className="main-container" 
-              style={{ display: 'grid', gridTemplateColumns: '20% 80%', height: '100%' }}>
-              <div style={{backgroundImage: 'url("/leftpic.png")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-              <div> 
-                <Component {...pageProps} />
-                {apiKey && <UIController />}
-              </div>
-            </div> }
-            
+            { <div className="main-container" style={{ display: 'grid', gridTemplateColumns: '30% 70%', height: '100%' }}>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    width: '100%'
+                  }}>
+                    <img 
+                      src="/01.jpg" 
+                      alt="图片描述"
+                      style={{
+                        width: '90%',
+                        height: 'auto', //  高度自动，保持比例
+                        borderRadius: '8px',
+                        marginTop: '0.5rem'
+                      }} 
+                    />
+                    <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
+                      <p>理财助理</p>
+                      <p>tonny</p>
+                    </div>
+                  </div>
+                  <div>
+                    <Component {...pageProps} />
+                    {apiKey && <UIController />}
+                  </div>
+                </div>}
+
             {playerMode && <AudioPlayer />}
           </AppShell>
         </MantineProvider>
