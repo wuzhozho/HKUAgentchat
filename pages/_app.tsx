@@ -1,7 +1,6 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import {
-  Aside,
   AppShell,
   ColorScheme,
   ColorSchemeProvider,
@@ -23,10 +22,7 @@ export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
   const colorScheme = useChatStore((state) => state.colorScheme);
-
-  // 使用 useChatStore 获取 isImmersive 状态
   const isImmersive = useChatStore((state) => state.isImmersive);
-  
   const toggleColorScheme = (value?: ColorScheme) => {
     const nextColorScheme =
       value || (colorScheme === "dark" ? "light" : "dark");
@@ -38,7 +34,6 @@ export default function App(props: AppProps) {
 
   const [isHydrated, setIsHydrated] = useState(false);
 
-  //Wait till NextJS rehydration completes
   useEffect(() => {
     setIsHydrated(true);
   }, []);
@@ -63,11 +58,9 @@ export default function App(props: AppProps) {
           withGlobalStyles
           withNormalizeCSS
           theme={{
-            /** Put your mantine theme override here */
             colorScheme,
             primaryColor: "bluu",
             colors: {
-              // https://smart-swatch.netlify.app/#5E6AD2
               bluu: [
                 "#e8edff",
                 "#c2c8f3",
@@ -80,7 +73,6 @@ export default function App(props: AppProps) {
                 "#0e1540",
                 "#04061b",
               ],
-              // https://smart-swatch.netlify.app/#2A2D3D
               dark: [
                 "#eef1fd",
                 "#d1d4e3",
@@ -99,7 +91,7 @@ export default function App(props: AppProps) {
           <Notifications />
           <AppShell
             padding={0}
-            navbar={isImmersive ?  <></> : <Nav />}
+            navbar={isImmersive ? <></> : <Nav />}
             layout="alt"
             navbarOffsetBreakpoint="sm"
             asideOffsetBreakpoint="sm"
@@ -109,36 +101,42 @@ export default function App(props: AppProps) {
                   theme.colorScheme === "dark"
                     ? theme.colors.dark[8]
                     : theme.colors.gray[0],
+                display: 'flex', // 使用 flex 布局
               },
             })}
           >
-            { <div className="main-container" style={{ display: 'grid', gridTemplateColumns: '30% 70%', height: '100%' }}>
-                  <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    width: '100%'
-                  }}>
-                    <img 
-                      src="/01.jpg" 
-                      alt="图片描述"
-                      style={{
-                        width: '90%',
-                        height: 'auto', //  高度自动，保持比例
-                        borderRadius: '8px',
-                        marginTop: '0.5rem'
-                      }} 
-                    />
-                    <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
-                      <p>理财助理</p>
-                      <p>tonny</p>
-                    </div>
-                  </div>
-                  <div>
-                    <Component {...pageProps} />
-                    {apiKey && <UIController />}
-                  </div>
-                </div>}
+            <div style={{ 
+              width: '25%', // 将宽度调整为 25%
+              position: 'fixed', 
+              height: '100vh', 
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              padding: '0.5rem'
+            }}>
+              <img 
+                src="/01.jpg" 
+                alt="图片描述"
+                style={{
+                  width: '90%',
+                  height: 'auto',
+                  borderRadius: '8px',
+                  marginTop: '0.5rem'
+                }} 
+              />
+              <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
+                <p>理财顾问</p>
+                <p>Torry</p>
+              </div>
+            </div>
+            <div style={{ 
+              width: '70%', // 将宽度调整为 75%
+              marginLeft: '30%', // 将左边距调整为 25%
+              overflowY: 'auto', 
+            }}>
+              <Component {...pageProps} />
+              {apiKey && <UIController />}
+            </div>
 
             {playerMode && <AudioPlayer />}
           </AppShell>
