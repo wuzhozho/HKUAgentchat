@@ -34,6 +34,8 @@ export default function App(props: AppProps) {
 
   const [isHydrated, setIsHydrated] = useState(false);
 
+  const chatrole = useChatStore((state) => state.role);
+
   useEffect(() => {
     setIsHydrated(true);
   }, []);
@@ -115,7 +117,7 @@ export default function App(props: AppProps) {
               padding: '0.5rem'
             }}>
               <img 
-                src="/01.jpg" 
+                src={chatrole?.role_pic}
                 alt="图片描述"
                 style={{
                   width: '90%',
@@ -125,8 +127,8 @@ export default function App(props: AppProps) {
                 }} 
               />
               <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
-                <p>理财顾问</p>
-                <p>Torry</p>
+                <p>{chatrole?.role_name1}</p>
+                <p>{chatrole?.role_name2}</p>
               </div>
             </div>
             <div style={{ 

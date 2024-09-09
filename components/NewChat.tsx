@@ -315,13 +315,14 @@ export default function NewChatCarousel() {
   if (prompt != '' || prompt != null || prompt != undefined ){
     characters["智能投资顾问"].prompt = prompt;
   }
-
+  const chatrole = useChatStore((state) => state.role);
   // 获取第一个角色的 key 和数据
   // const firstCharacterKey = Object.keys(characters)[0];
-  const firstCharacterKey = "智能理财顾问";
-  const firstCharacter = characters['智能投资顾问']; // 获取第一个角色的数据
+  // const firstCharacterKey = "智能理财顾问";
+  // const firstCharacterPrompt = characters['智能投资顾问'].prompt; // 获取第一个角色的数据
 
-
+  const firstCharacterKey: string = chatrole?.button_title || "智能理财顾问";
+  const firstCharacterPrompt: string = chatrole?.prompt || characters['智能投资顾问'].prompt;
 
   return (
     <Container py="xl">
@@ -337,7 +338,7 @@ export default function NewChatCarousel() {
             addChat(router);
             submitMessage({
               id: uuidv4(),
-              content: firstCharacter.prompt,
+              content: firstCharacterPrompt,
               role: "system",
             });
           }}
