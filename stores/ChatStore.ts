@@ -108,6 +108,14 @@ export interface ChatState {
     createdAt: string;
     updatedAt: string;
   };
+  role?:{
+    title: string,
+    role_name1: string,
+    role_name2: string,
+    role_pic: string,
+    button_title: string,
+    prompt: string,
+  }
   baseUrl: string,
   apiState: APIState;
   apiKey: string | undefined;
@@ -158,6 +166,7 @@ export const initialState = {
   lan: 'en',
   prompt:'',
   user: undefined,
+  role: undefined,
   baseUrl: 'https://api.openai.com',
   apiState: "idle" as APIState,
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY || undefined,
