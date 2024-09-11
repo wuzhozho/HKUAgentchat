@@ -140,6 +140,7 @@ export default function ChatDisplay({ message }: { message: Message }) {
   const { classes, cx } = useStyles();
 
   const pushToTalkMode = useChatStore((state) => state.pushToTalkMode);
+  const chatrole = useChatStore((state) => state.role);
 
   const handleMainAction = (message: Message) => {
     if (message.role === "assistant") {
@@ -153,70 +154,94 @@ export default function ChatDisplay({ message }: { message: Message }) {
     delMessage(message);
   };
 
-  if (message.role !== 'system') {
-  return (
-    <div
-      key={message.id}
-      className={cx(
-        classes.messageContainer,
-        message.role === "user"
-          ? classes.userMessageContainer
-          : classes.botMessageContainer
-      )}
-    >
+  if (message.role !== "system") {
+    return (
       <div
+        key={message.id}
         className={cx(
-          classes.message,
-          message.role === "user" ? classes.userMessage : classes.botMessage
+          classes.messageContainer,
+          message.role === "user"
+            ? classes.userMessageContainer
+            : classes.botMessageContainer
         )}
       >
-        <div className={classes.messageWrapper}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-              <div className={classes.topOfMessage}>
-                <Avatar size="sm">
-                  {/* 删除 message.role === "system" 的判断 2024.05.26 有删减 */}
-                  {message.role === "assistant" ? ( 
-                    <AssistantIcon width={px("1.5rem")} height={px("1.5rem")} />
-                  ) : (
-                    <UserIcon width={px("1.5rem")} height={px("1.5rem")} />
-                  )}
-                </Avatar>
-              </div>
-            </MediaQuery>
+        <div
+          className={cx(
+            classes.message,
+            message.role === "user" ? classes.userMessage : classes.botMessage
+          )}
+        >
+          <div className={classes.messageWrapper}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+                <div className={classes.topOfMessage}>
+                  <Avatar
+                    size="md"
+                    sx={{
+                      width: 56, 
+                      height: 56, 
+                      borderRadius: "25%", 
+                      overflow: "hidden",
+                    }}
+                  >
+                    {/* 删除 message.role === "system" 的判断 2024.05.26 有删减 */}
+                    {message.role === "assistant" ? (
+                      <img
+                        src="/assist.png"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          objectPosition: "top", 
+                        }}
+                      />
+                    ) : (
+                      <img
+                        src={chatrole?.role_pic_sm}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          objectPosition: "top", // 从顶部开始显示
+                        }}
+                      />
+                    )}
+                  </Avatar>
+                </div>
+              </MediaQuery>
 
-            <MessageDisplay
-              message={message}
-              className={classes.messageDisplay}
-            />
-          </div>
-          <div className={classes.actionIconsWrapper}>
-            <ActionIcon
-              className={cx(classes.actionIcon, classes.topOfMessage)}
-              onClick={() => handleMainAction(message)}
-              color="gray"
-            >
-              {message.role === "assistant" ? <IconRepeat /> : <IconEdit />}
-            </ActionIcon>
-            <ActionIcon
-              className={cx(classes.actionIcon, classes.topOfMessage)}
-              onClick={() => handleDeleteMessage(message)}
-              color="gray"
-            >
-              <IconX />
-            </ActionIcon>
+              <MessageDisplay
+                message={message}
+                className={classes.messageDisplay}
+              />
+            </div>
+            <div className={classes.actionIconsWrapper}>
+              <ActionIcon
+                className={cx(classes.actionIcon, classes.topOfMessage)}
+                onClick={() => handleMainAction(message)}
+                color="gray"
+              >
+                {message.role === "assistant" ? <IconRepeat /> : <IconEdit />}
+              </ActionIcon>
+              <ActionIcon
+                className={cx(classes.actionIcon, classes.topOfMessage)}
+                onClick={() => handleDeleteMessage(message)}
+                color="gray"
+              >
+                <IconX />
+              </ActionIcon>
+            </div>
           </div>
         </div>
       </div>
-    </div>         
-  );
-  }else{
+    );
+  } else {
     // 如果 message.role 是 'system'，则不渲染任何内容
-    return null; 
+    return null;
   }
 }

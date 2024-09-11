@@ -113,6 +113,7 @@ export interface ChatState {
     role_name1: string,
     role_name2: string,
     role_pic: string,
+    role_pic_sm: string,
     button_title: string,
     prompt: string,
   }
