@@ -35,6 +35,8 @@ export default function App(props: AppProps) {
   const [isHydrated, setIsHydrated] = useState(false);
 
   const chatrole = useChatStore((state) => state.role);
+  const showrole = useChatStore((state) => state.showrole);
+  const isShow = false;
 
   useEffect(() => {
     setIsHydrated(true);
@@ -107,7 +109,7 @@ export default function App(props: AppProps) {
               },
             })}
           >
-            <div style={{ 
+            <div v-if="user" style={{ 
               width: '25%', // 将宽度调整为 25%
               position: 'fixed', 
               height: '100vh', 
@@ -116,9 +118,8 @@ export default function App(props: AppProps) {
               alignItems: 'center',
               padding: '0.5rem'
             }}>
-              <img 
+              <img
                 src={chatrole?.role_pic}
-                alt="图片描述"
                 style={{
                   width: '90%',
                   height: 'auto',

@@ -201,8 +201,8 @@ export default function ChatDisplay({ message }: { message: Message }) {
                         }}
                       />
                     ) : (
-                      <img
-                        src={chatrole?.role_pic_sm}
+                      <img v-if="chatrole?.role_pic_sm"
+                        src={chatrole?.role_pic_sm?chatrole?.role_pic_sm:'/u.png'}
                         style={{
                           width: "100%",
                           height: "100%",
