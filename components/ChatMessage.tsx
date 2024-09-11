@@ -190,7 +190,7 @@ export default function ChatDisplay({ message }: { message: Message }) {
                     }}
                   >
                     {/* 删除 message.role === "system" 的判断 2024.05.26 有删减 */}
-                    {message.role === "assistant" ? (
+                    {(message.role === "user") ? (
                       <img
                         src="/assist.png"
                         style={{
