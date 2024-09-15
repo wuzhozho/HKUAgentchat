@@ -77,7 +77,7 @@ const LoginPage: React.FC<Props> = ({ isOpen, onClose, onLogin }) => {
           });
           // 取配置信息
           await fetchConfig(jwt);
-          await chatrole(jwt);
+          await chatrole(user, jwt);
           onClose();
           onLogin(user);
         }
@@ -96,7 +96,7 @@ const LoginPage: React.FC<Props> = ({ isOpen, onClose, onLogin }) => {
   };
 
   // 获取chatrole信息
-  const chatrole = async (jwt: string) => {
+  const chatrole = async (user: any, jwt: string) => {
     try {
       const response = await axios.get("/api/chatrole", {
         headers: {
@@ -105,10 +105,16 @@ const LoginPage: React.FC<Props> = ({ isOpen, onClose, onLogin }) => {
       });
       if (response.status === 201) {
         const roles = response.data.data;
-        // 生成随机索引
-        const randomIndex = Math.floor(Math.random() * roles.length);
-        // 获取随机元素
-        const role = roles[randomIndex];
+        // console.log("=================", roles);
+        // 根据后台配置取出信息
+        let role = roles[0] 
+        if (user.chat_role)
+          role = roles.find((item:any) => item.id === user.chat_role);
+        // console.log("=================", role);
+        // // 生成随机索引
+        // const randomIndex = Math.floor(Math.random() * roles.length);
+        // // 获取随机元素
+        // const role = roles[randomIndex];
         // console.log("----------------random role:", role);
         useChatStore.setState({
           role: role.attributes,
