@@ -102,7 +102,7 @@ export interface ChatState {
   user?: { // 可选的用户信息，初次加载时可能未登录，故此处为可选
     id: number;
     username: string;
-    surename: string;
+    surname: string;
     email: string;
     provider: string;
     confirmed: boolean;

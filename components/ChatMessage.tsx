@@ -141,6 +141,7 @@ export default function ChatDisplay({ message }: { message: Message }) {
 
   const pushToTalkMode = useChatStore((state) => state.pushToTalkMode);
   const chatrole = useChatStore((state) => state.role);
+  const user = useChatStore((state) => state.user);
 
   const handleMainAction = (message: Message) => {
     if (message.role === "assistant") {
@@ -191,15 +192,19 @@ export default function ChatDisplay({ message }: { message: Message }) {
                   >
                     {/* 删除 message.role === "system" 的判断 2024.05.26 有删减 */}
                     {(message.role === "user") ? (
+                      user?.surname ? ( // 检查 user.surname 是否存在
+                      <span style={{ fontSize: '20px' }} >{ user?.surname }</span> // 显示 user.surname 文字
+                    ) : (
                       <img
                         src="/assist.png"
                         style={{
                           width: "100%",
                           height: "100%",
                           objectFit: "cover",
-                          objectPosition: "top", 
+                          objectPosition: "top",
                         }}
                       />
+                    )
                     ) : (
                       <img v-if="chatrole?.role_pic_sm"
                         src={chatrole?.role_pic_sm?chatrole?.role_pic_sm:'/u.png'}
