@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(201).json(response.data);
         } catch (err:any) {
             // console.error(err);
-            console.log('An error occurred:---------', err.response.data.error);
+            console.log('An error occurred:---------', err);
             return res.status(500).json({ error: err.response.data.error.message });
         }
     } else {

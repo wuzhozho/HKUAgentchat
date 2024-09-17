@@ -24,10 +24,12 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
   const { t } = useTranslation();
 
   const [username, setUsername] = useState("");
+  const [surname, setSurname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const [usernameError, setUsernameError] = useState<string | null>(null);
+  const [surnameError, setSurnameError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -36,6 +38,12 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
     const newUsername = event.currentTarget.value;
     setUsername(newUsername);
     setUsernameError(newUsername === '' ? t('user-check-usernotempty') : null);
+  }
+
+  const handleChangeSurname = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newSurname = event.currentTarget.value;
+    setSurname(newSurname);
+    setSurnameError(newSurname === '' ? t('user-check-surnotempty') : null);
   }
 
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,12 +78,13 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
 
   const  handleRegister = async () => {
     setUsernameError(username === '' ? t('user-check-usernotempty') : null);
-    setEmailError(email === '' ? t('user-check-pwdnotempty') : null);
-    setPasswordError(password === '' ? t('user-check-emailnotempty') : null);
+    setSurnameError(surname === '' ? t('user-check-surnotempty') : null);
+    setEmailError(email === '' ? t('user-check-emailnotempty') : null);
+    setPasswordError(password === '' ? t('user-check-pwdnotempty') : null);
     setConfirmPasswordError(password !== confirmPassword ? t('user-check-pwdnotsame') : null);
 
-    if(username !== '' && password !== '' && email !== '' && password === confirmPassword) {
-      const data = {username: `${username}`, password: `${password}`, email: `${email}`}
+    if(username !== '' && surname !== '' && password !== '' && email !== '' && password === confirmPassword) {
+      const data = {username: `${username}`, surname: `${surname}`, password: `${password}`, email: `${email}`}
       console.log(data);
       // 注册用户
       try {
@@ -109,6 +118,7 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
 
   useEffect(() => {
     setUsernameError(username === '' ? t('user-check-usernotempty') : null);
+    setSurnameError(surname === '' ? t('user-check-surnotempty') : null);
     setEmailError(email === ''
         ? t('user-check-emailnotempty')
         : (!/^\S+@\S+\.\S+$/.test(email) ? t('user-check-emailvalidator') : null)
@@ -144,6 +154,14 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
           onChange={handleChangeEmail}
         />
         {emailError && <Notification title={emailError} color="red" />}
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+        <TextInput 
+          placeholder={t('user-surname')}
+          value={surname}
+          onChange={handleChangeSurname}
+        />
+        {surnameError && <Notification title={surnameError} color="red" />}
       </div>
       <div style={{ marginBottom: '20px' }}>
         <TextInput 

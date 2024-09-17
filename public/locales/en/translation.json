@@ -28,5 +28,7 @@
   "user-pwd-fail": "Password Change Failed",
   "user-quit-yesno": "Are you sure you want to log out?",
   "confirm":"Confirm",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "user-surname":"surname",
+  "user-check-surnotempty":"surname not empty"
 }

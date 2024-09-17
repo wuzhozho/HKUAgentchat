@@ -28,5 +28,7 @@
     "user-pwd-fail":"密码修改失败",
     "user-quit-yesno":"你确定要退出登录吗？",
     "confirm":"确认",
-    "cancel":"取消"
+    "cancel":"取消",
+    "user-surname":"姓氏",
+    "user-check-surnotempty":"姓氏不能为空。"
 }

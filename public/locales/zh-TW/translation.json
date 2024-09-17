@@ -28,6 +28,8 @@
     "user-pwd-fail":"密碼修改失敗",
     "user-quit-yesno":"你確定要退出登錄嗎？",
     "confirm":"確認",
-    "cancel":"取消"
+    "cancel":"取消",
+    "user-surname":"姓氏",
+    "user-check-surnotempty":"姓氏不能为空。"
     
 }
