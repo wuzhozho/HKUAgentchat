@@ -162,7 +162,7 @@ export async function streamCompletion(
   });
 
   let buffer = "";
-
+  let messageleft = ""
   const successCallback = (res: IncomingMessage) => {
     res.on("data", (chunk) => {
       if (abortController?.signal.aborted) {
@@ -171,8 +171,13 @@ export async function streamCompletion(
         return;
       }
 
+      let allmessageStr = chunk.toString()
+      if (messageleft!=""){
+        allmessageStr = messageleft + allmessageStr
+        messageleft = ""
+      }
       // Split response into individual messages
-      const allMessages = chunk.toString().split("\n\n");
+      const allMessages = allmessageStr.split("\n\n");
       for (const message of allMessages) {
         // Remove first 5 characters ("data:") of response
         const cleaned = message.toString().trim().slice(5);
@@ -185,6 +190,7 @@ export async function streamCompletion(
         try {
           parsed = JSON.parse(cleaned);
         } catch (e) {
+          messageleft = message
           console.error(e);
           return;
         }
