@@ -121,10 +121,10 @@ export default function App(props: AppProps) {
               <img
                 src={chatrole?.role_pic}
                 style={{
-                  width: '90%',
+                  width: '70%',
                   height: 'auto',
                   borderRadius: '8px',
-                  marginTop: '0.5rem'
+                  marginTop: '2rem'
                 }} 
               />
               <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
