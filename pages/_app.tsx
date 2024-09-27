@@ -110,7 +110,7 @@ export default function App(props: AppProps) {
             })}
           >
             <div v-if="user" style={{ 
-              width: '25%', // 将宽度调整为 25%
+              width: '22%', // 将宽度调整为 25%
               position: 'fixed', 
               height: '100vh', 
               display: 'flex',
@@ -121,7 +121,7 @@ export default function App(props: AppProps) {
               <img
                 src={chatrole?.role_pic}
                 style={{
-                  width: '70%',
+                  width: '75%',
                   height: 'auto',
                   borderRadius: '8px',
                   marginTop: '2rem'
@@ -133,8 +133,8 @@ export default function App(props: AppProps) {
               </div>
             </div>
             <div style={{ 
-              width: '70%', // 将宽度调整为 75%
-              marginLeft: '30%', // 将左边距调整为 25%
+              width: '75%', // 将宽度调整为 75%
+              marginLeft: '25%', // 将左边距调整为 25%
               overflowY: 'auto', 
             }}>
               <Component {...pageProps} />
