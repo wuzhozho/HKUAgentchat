@@ -41,7 +41,7 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
     paddingLeft: 0,
     paddingRight: 0,
     [`@media (min-width: ${theme.breakpoints.md})`]: {
