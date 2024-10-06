@@ -37,10 +37,16 @@ const styles = createStyles((theme: MantineTheme) => ({
     bottom: 0,
     left: 0,
     [`@media (min-width: ${theme.breakpoints.sm})`]: {
-      left: 200,
+      left: 0,
     },
     [`@media (min-width: ${theme.breakpoints.md})`]: {
-      left: 250,
+      left: 400,
+    },
+    [`@media (min-width: ${theme.breakpoints.lg})`]: {
+      left: 300,
+    },
+    [`@media (min-width: ${theme.breakpoints.xl})`]: {
+      left: 200,
     },
     right: 0,
     zIndex: 1,
