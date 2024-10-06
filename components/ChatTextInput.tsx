@@ -101,7 +101,7 @@ const ChatInput = forwardRef(({ className }: { className?: string }, ref) => {
       className={className}
       autosize
       maxRows={5}
-      minRows={2}
+      minRows={1}
       sx={{
         position: "relative",
       }}

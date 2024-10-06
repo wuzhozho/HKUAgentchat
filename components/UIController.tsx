@@ -387,8 +387,8 @@ const UIController: React.FC = () => {
   // );
   return (
     <div className={classes.container} style={{ display: 'flex', height: '100%' }}>
-      <div style={{ width: '30%' }}></div>
-      <div style={{ width: '70%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+      {/* <div style={{ width: '20%' }}></div> */}
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
         <ChatInput ref={chatInputRef} />
       </div>
     </div>
