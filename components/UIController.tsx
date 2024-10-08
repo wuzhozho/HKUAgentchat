@@ -38,7 +38,7 @@ const styles = createStyles((theme: MantineTheme) => ({
     left: 0,
     right: 0,
     zIndex: 1,
-    maxWidth: 820,
+    // maxWidth: 820,
     margin: "0 auto",
     paddingBottom: 16,
     paddingLeft: 8,

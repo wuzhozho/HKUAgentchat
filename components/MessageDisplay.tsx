@@ -26,9 +26,9 @@ const blink = keyframes`
 const useStyles = createStyles((theme: MantineTheme) => ({
   container: {
     maxWidth: "calc(100vw - 55px)",
-    [`@media (min-width: ${theme.breakpoints.md})`]: {
-      maxWidth: "calc(820px - 120px)",
-    },
+    // [`@media (min-width: ${theme.breakpoints.md})`]: {
+    //   maxWidth: "calc(820px - 120px)",
+    // },
   },
   // This is implemented in the most horrible way and needs a FF bad
   copyText: {

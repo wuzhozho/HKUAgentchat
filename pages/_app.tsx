@@ -142,7 +142,7 @@ export default function App(props: AppProps) {
             }}>
               <Component {...pageProps} />
 
-              <div style={{ width: '50%' }}> {/* 为 UIController 添加一个宽度为 50% 的父元素 */}
+              <div > 
                 {apiKey && <UIController />} 
               </div>
             </div>
