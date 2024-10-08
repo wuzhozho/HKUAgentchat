@@ -136,9 +136,15 @@ export default function App(props: AppProps) {
               width: '75%', // 将宽度调整为 75%
               marginLeft: '25%', // 将左边距调整为 25%
               overflowY: 'auto', 
+              display: 'flex', // 将聊天内容区域设置为 flex 容器
+              flexDirection: 'column',
+              flexGrow: 1,
             }}>
               <Component {...pageProps} />
-              {apiKey && <UIController />}
+
+              <div style={{ width: '50%' }}> {/* 为 UIController 添加一个宽度为 50% 的父元素 */}
+                {apiKey && <UIController />} 
+              </div>
             </div>
 
             {playerMode && <AudioPlayer />}

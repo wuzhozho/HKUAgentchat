@@ -33,21 +33,9 @@ const styles = createStyles((theme: MantineTheme) => ({
   container: {
     display: "flex",
     justifyContent: "space-between",
-    position: "fixed",
+    position: "relative",
     bottom: 0,
     left: 0,
-    [`@media (min-width: ${theme.breakpoints.sm})`]: {
-      left: 0,
-    },
-    [`@media (min-width: ${theme.breakpoints.md})`]: {
-      left: 400,
-    },
-    [`@media (min-width: ${theme.breakpoints.lg})`]: {
-      left: 300,
-    },
-    [`@media (min-width: ${theme.breakpoints.xl})`]: {
-      left: 200,
-    },
     right: 0,
     zIndex: 1,
     maxWidth: 820,

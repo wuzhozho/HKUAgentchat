@@ -8,14 +8,7 @@ const styles = createStyles((theme: MantineTheme) => ({
     position: "fixed",
     bottom: 0,
     left: 0,
-    [`@media (min-width: ${theme.breakpoints.sm})`]: {
-      left: 200,
-    },
-    [`@media (min-width: ${theme.breakpoints.md})`]: {
-      left: 250,
-    },
-
-    right: 0,
+    // right: 0,
     zIndex: 1,
     maxWidth: 820,
     margin: "0 auto",
