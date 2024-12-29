@@ -76,15 +76,26 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
     setConfirmPasswordError(newConfirmPassword !== password ? t('user-check-pwdnotsame') : null);
   }
 
+  const generateUniqueEmail = () => {
+    const timestamp = new Date().getTime(); // 获取当前毫秒时间戳
+    const randomNumber1 = Math.floor(Math.random() * 10000) + 1; // 生成 1 到 10000 之间的随机数
+    const randomNumber2 = Math.floor(Math.random() * 10000) + 1;
+  
+    const emailUsername = `${timestamp}${randomNumber1}`;
+    const emailDomain = `${timestamp}${randomNumber2}.com`;
+  
+    return `${emailUsername}@${emailDomain}`;
+  }
+
   const  handleRegister = async () => {
     setUsernameError(username === '' ? t('user-check-usernotempty') : null);
     // setSurnameError(surname === '' ? t('user-check-surnotempty') : null);
-    setEmailError(email === '' ? t('user-check-emailnotempty') : null);
+    // setEmailError(email === '' ? t('user-check-emailnotempty') : null);
     setPasswordError(password === '' ? t('user-check-pwdnotempty') : null);
     setConfirmPasswordError(password !== confirmPassword ? t('user-check-pwdnotsame') : null);
 
     if(username !== '' && password !== '' && password === confirmPassword) {
-      const data = {username: `${username}`, password: `${password}`, email: `${email}`}
+      const data = {username: `${username}`, password: `${password}`, email: `${generateUniqueEmail()}`}
       console.log(data);
       // 注册用户
       try {
@@ -146,7 +157,7 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
         />
         {usernameError && <Notification title={usernameError} color="red" />}
       </div>
-      <div style={{ marginBottom: '20px' }}>
+      {/* <div style={{ marginBottom: '20px' }}>
         <TextInput 
           type="email"
           placeholder={t('user-email')}
@@ -154,7 +165,7 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
           onChange={handleChangeEmail}
         />
         {emailError && <Notification title={emailError} color="red" />}
-      </div>
+      </div> */}
       {/* <div style={{ marginBottom: '20px' }}>
         <TextInput 
           placeholder={t('user-surname')}
