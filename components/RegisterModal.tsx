@@ -79,7 +79,7 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
   const  handleRegister = async () => {
     setUsernameError(username === '' ? t('user-check-usernotempty') : null);
     // setSurnameError(surname === '' ? t('user-check-surnotempty') : null);
-    // setEmailError(email === '' ? t('user-check-emailnotempty') : null);
+    setEmailError(email === '' ? t('user-check-emailnotempty') : null);
     setPasswordError(password === '' ? t('user-check-pwdnotempty') : null);
     setConfirmPasswordError(password !== confirmPassword ? t('user-check-pwdnotsame') : null);
 
@@ -119,10 +119,10 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
   useEffect(() => {
     setUsernameError(username === '' ? t('user-check-usernotempty') : null);
     // setSurnameError(surname === '' ? t('user-check-surnotempty') : null);
-    // setEmailError(email === ''
-    //     ? t('user-check-emailnotempty')
-    //     : (!/^\S+@\S+\.\S+$/.test(email) ? t('user-check-emailvalidator') : null)
-    // );
+    setEmailError(email === ''
+        ? t('user-check-emailnotempty')
+        : (!/^\S+@\S+\.\S+$/.test(email) ? t('user-check-emailvalidator') : null)
+    );
     setPasswordError(password === ''
         ? t('user-check-pwdnotempty')
         : (password.length < 6 ? t('user-check-pwdmin6') : null)
