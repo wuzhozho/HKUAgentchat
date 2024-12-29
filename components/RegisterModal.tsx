@@ -78,13 +78,13 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
 
   const  handleRegister = async () => {
     setUsernameError(username === '' ? t('user-check-usernotempty') : null);
-    setSurnameError(surname === '' ? t('user-check-surnotempty') : null);
-    setEmailError(email === '' ? t('user-check-emailnotempty') : null);
+    // setSurnameError(surname === '' ? t('user-check-surnotempty') : null);
+    // setEmailError(email === '' ? t('user-check-emailnotempty') : null);
     setPasswordError(password === '' ? t('user-check-pwdnotempty') : null);
     setConfirmPasswordError(password !== confirmPassword ? t('user-check-pwdnotsame') : null);
 
-    if(username !== '' && surname !== '' && password !== '' && email !== '' && password === confirmPassword) {
-      const data = {username: `${username}`, surname: `${surname}`, password: `${password}`, email: `${email}`}
+    if(username !== '' && password !== '' && password === confirmPassword) {
+      const data = {username: `${username}`, password: `${password}`, email: `${email}`}
       console.log(data);
       // 注册用户
       try {
@@ -118,11 +118,11 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
 
   useEffect(() => {
     setUsernameError(username === '' ? t('user-check-usernotempty') : null);
-    setSurnameError(surname === '' ? t('user-check-surnotempty') : null);
-    setEmailError(email === ''
-        ? t('user-check-emailnotempty')
-        : (!/^\S+@\S+\.\S+$/.test(email) ? t('user-check-emailvalidator') : null)
-    );
+    // setSurnameError(surname === '' ? t('user-check-surnotempty') : null);
+    // setEmailError(email === ''
+    //     ? t('user-check-emailnotempty')
+    //     : (!/^\S+@\S+\.\S+$/.test(email) ? t('user-check-emailvalidator') : null)
+    // );
     setPasswordError(password === ''
         ? t('user-check-pwdnotempty')
         : (password.length < 6 ? t('user-check-pwdmin6') : null)
@@ -155,14 +155,14 @@ const RegisterPage: React.FC<Props> = ({ isOpen, onClose, onRegister }) => {
         />
         {emailError && <Notification title={emailError} color="red" />}
       </div>
-      <div style={{ marginBottom: '20px' }}>
+      {/* <div style={{ marginBottom: '20px' }}>
         <TextInput 
           placeholder={t('user-surname')}
           value={surname}
           onChange={handleChangeSurname}
         />
         {surnameError && <Notification title={surnameError} color="red" />}
-      </div>
+      </div> */}
       <div style={{ marginBottom: '20px' }}>
         <TextInput 
           placeholder={t('user-password')}
